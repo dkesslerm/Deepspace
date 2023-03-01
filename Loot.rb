@@ -10,23 +10,23 @@ module DeepSpace
         end
 
         def nSupplies
-            puts nSupplies
+            @nSupplies
         end
 
         def nWeapons
-            puts nWeapons
+            @nWeapons
         end
 
         def nShields
-            puts nShields
+            @nShields
         end
 
         def nHangars
-            puts nHangars
+            @nHangars
         end
 
         def nMedals
-            puts nMedals
+            @nMedals
         end
     end
 end

@@ -6,9 +6,8 @@ module DeepSpace
                 @power=p
             end
 
-            public
             def power
-                puts @power
+                @power
             end
         end
 
