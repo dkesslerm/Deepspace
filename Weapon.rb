@@ -10,6 +10,11 @@ module DeepSpace
             @uses=u
         end
 
+        #Constructor de copia
+        def newCopy(w)
+            self.new(w.name, w.type, w.uses)
+        end
+
         def type
             @type
         end

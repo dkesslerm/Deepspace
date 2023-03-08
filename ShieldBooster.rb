@@ -2,7 +2,7 @@
 
 module DeepSpace
 
-    class SHieldBooster
+    class ShieldBooster
 
         def initialize(n,b,u)
             @name=n
@@ -10,7 +10,10 @@ module DeepSpace
             @uses=u
         end
 
-        # Falta constructor de copia
+        # Constructor de copia 
+        def newCopy(s)
+            self.new(s.name, s.boost, s.uses)
+        end
 
         def boost
             @boost

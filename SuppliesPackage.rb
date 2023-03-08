@@ -10,8 +10,9 @@ module DeepSpace
             @shieldPower=s
         end
 
-
-        # Falta constructor de copia
+        #Constructor de copia
+        def newCopy(s)
+            self.new(s.ammoPower, s.fuelUnits, s.shieldPower)
 
         def ammoPower
             @ammoPower
