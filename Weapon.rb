@@ -2,34 +2,34 @@
 
 module DeepSpace
 
-    class SHieldBooster
+    class Weapon
 
-        def initialize(n,b,u)
+        def initialize(n,t,u)
             @name=n
-            @boost=b
+            @type=t
             @uses=u
         end
 
-        # Falta constructor de copia
-
-        def boost
-            @boost
+        def type
+            @type
         end
 
         def uses
             @uses
         end
 
+        def power
+            @type.ammoPower
+        end
+
         def useIt
             if (uses > 0)
                 uses--
-                boost
-
+                power
             else
                 1.0
             end
         end
 
     end
-
 end
