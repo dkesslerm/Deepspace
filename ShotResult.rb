@@ -4,5 +4,4 @@ module DeepSpace
         DONOTRESIST=:donotresist
         RESIST=:resist
     end
-    SPACESTATION=:SPACESTATION
 end
