@@ -24,7 +24,7 @@ module DeepSpace
         end
 
         def power
-            @type.ammoPower
+            @type.power
         end
 
         def useIt

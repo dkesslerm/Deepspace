@@ -1,8 +1,11 @@
 #encoding: utf-8
 
+require_relative 'GameCharacter.rb'
+
+
 module DeepSpace
 
-    require "Random"
+    
     class Dice
 
         def initialize()
@@ -50,9 +53,9 @@ module DeepSpace
 
         def firstShot
             if(@generator.rand <= @FIRSTSHOTPROB)
-                GameCharacter.SPACESTATION
+                GameCharacter::SPACESTATION
             else
-                GameCharacter.ENEMYSTARSHIP
+                GameCharacter::ENEMYSTARSHIP
             end
         end
         
@@ -60,8 +63,6 @@ module DeepSpace
             (@generator.rand <= speed)
         end
 
-        
+    end
 
-
-
-
+end

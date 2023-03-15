@@ -11,8 +11,8 @@ module DeepSpace
         end
 
         # Constructor de copia 
-        def newCopy(s)
-            self.new(s.name, s.boost, s.uses)
+        def self.newCopy(s)
+            new(s.name, s.boost, s.uses)
         end
 
         def boost
