@@ -1,5 +1,7 @@
 #encoding: utf-8
 
+require_relative 'WeaponToUI.rb'
+
 module DeepSpace
 
     class Weapon
@@ -36,5 +38,12 @@ module DeepSpace
             end
         end
 
+        def getUIVersion
+            return WeaponToUI.new(self)
+        end
+
+        def to_s
+            return getUIVersion.to_s
+        end
     end
 end

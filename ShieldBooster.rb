@@ -33,6 +33,14 @@ module DeepSpace
             end
         end
 
+        def getUIVersion
+            return ShieldToUI.new(self)
+        end
+
+        def to_s
+            return "Name: #{@name}, " + getUIVersion.to_s
+        end
+
     end
 
 end

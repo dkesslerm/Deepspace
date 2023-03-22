@@ -1,4 +1,7 @@
 #encoding:utf-8
+
+require_relative 'LootToUI.rb'
+
 module DeepSpace
     class Loot
         def initialize(su, we, sh, ha, me)
@@ -28,5 +31,12 @@ module DeepSpace
         def nMedals
             @nMedals
         end
+
+        def getUIVersion
+            return LootToUI.new(self)
+        end
+
+        def to_s
+            getUIVersion.to_s
     end
 end
