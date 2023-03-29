@@ -1,8 +1,11 @@
 #encoding: utf-8
 
+require_relative 'ShieldToUI.rb'
+
 module DeepSpace
 
     class ShieldBooster
+
 
         def initialize(n,b,u)
             @name=n
@@ -25,7 +28,7 @@ module DeepSpace
 
         def useIt
             if (uses > 0)
-                uses--
+                uses -= 1
                 boost
 
             else

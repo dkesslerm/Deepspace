@@ -1,6 +1,7 @@
 #encoding: utf-8
 
 require_relative 'WeaponToUI.rb'
+require_relative 'WeaponType.rb'
 
 module DeepSpace
 
@@ -13,7 +14,7 @@ module DeepSpace
         end
 
         #Constructor de copia
-        def newCopy(w)
+        def self.newCopy(w)
             self.new(w.name, w.type, w.uses)
         end
 

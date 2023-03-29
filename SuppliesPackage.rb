@@ -11,7 +11,7 @@ module DeepSpace
         end
 
         #Constructor de copia
-        def newCopy(s)
+        def self.newCopy(s)
             self.new(s.ammoPower, s.fuelUnits, s.shieldPower)
         end
 
