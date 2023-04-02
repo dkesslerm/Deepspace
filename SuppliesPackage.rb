@@ -15,6 +15,8 @@ module DeepSpace
             self.new(s.ammoPower, s.fuelUnits, s.shieldPower)
         end
 
+        public
+        
         def ammoPower
             @ammoPower
         end

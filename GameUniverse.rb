@@ -12,15 +12,19 @@ require_relative 'GameCharacter.rb'
 module DeepSpace
     class GameUniverse
         
+        def combat(station,enemy)
+
+        end
+
+        private
+        
         @@WIN = 10
+
+        public
 
         def initialize()
             @currentStationIndex = 0
             @turns = 0
-        end
-
-        def combat(station,enemy)
-
         end
 
         def combat
@@ -69,6 +73,10 @@ module DeepSpace
 
         def nextTurn
 
+        end
+
+        def to_s
+            getUIVersion.to_s
         end
 
     end

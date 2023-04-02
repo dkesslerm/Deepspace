@@ -18,6 +18,12 @@ module DeepSpace
             self.new(w.name, w.type, w.uses)
         end
 
+        def getUIVersion
+            return WeaponToUI.new(self)
+        end
+
+        public
+
         def type
             @type
         end
@@ -37,10 +43,6 @@ module DeepSpace
             else
                 1.0
             end
-        end
-
-        def getUIVersion
-            return WeaponToUI.new(self)
         end
 
         def to_s

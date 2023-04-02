@@ -22,9 +22,13 @@ module DeepSpace
             HangarToUI.new(self)
         end
 
+        private
+
         def spaceAvailable
 
         end
+
+        public
 
         def addWeapon(w)
 
@@ -54,5 +58,9 @@ module DeepSpace
 
         end
 
+        def to_s
+            getUIVersion.to_s
+        end
+        
     end
 end

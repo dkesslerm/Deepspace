@@ -18,6 +18,12 @@ module DeepSpace
             new(s.name, s.boost, s.uses)
         end
 
+        def getUIVersion
+            return ShieldToUI.new(self)
+        end
+
+        public
+
         def boost
             @boost
         end
@@ -34,10 +40,6 @@ module DeepSpace
             else
                 1.0
             end
-        end
-
-        def getUIVersion
-            return ShieldToUI.new(self)
         end
 
         def to_s

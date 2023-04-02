@@ -18,23 +18,21 @@ module DeepSpace
         end
 
         def self.newCopy(e)
-            @name=e.name
-            @ammoPower=e.ammoPower
-            @shieldPower=e.shieldPower
-            @loot=e.loot
-            @damage=e.damage
+            initialize(e.name,e.ammoPower,e.shieldPower,e.loot,e.damage)
         end
 
         def getUIVersion
             EnemyToUI.new(self)
         end
 
+        public
+        
         def fire
 
         end
 
-        def getAmmoPower
-
+        def AmmoPower
+            @ammoPower
         end
 
         def damage
@@ -59,6 +57,11 @@ module DeepSpace
 
         def receiveShot(shot)
 
+        end
+
+        def to_s
+            out = "Name " + name + ", AmmoPower: " + ammoPower + ", ShieldPower: " + shieldPower + ", Loot: " + loot.to_s
+            out += ", Damage: " + damage.to_s
         end
 
     end

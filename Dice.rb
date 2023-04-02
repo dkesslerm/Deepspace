@@ -16,6 +16,8 @@ module DeepSpace
             @generator=Random.new
         end
 
+        public
+
         def initWithNHangars
             if (@generator.rand <= @NHANGARSPROB)
                 0

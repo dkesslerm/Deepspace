@@ -14,6 +14,12 @@ module DeepSpace
             @nMedals=me
         end
 
+        def getUIVersion
+            return LootToUI.new(self)
+        end
+
+        public
+
         def nSupplies
             @nSupplies
         end
@@ -34,11 +40,9 @@ module DeepSpace
             @nMedals
         end
 
-        def getUIVersion
-            return LootToUI.new(self)
-        end
-
         def to_s
             getUIVersion.to_s
+        end
+        
     end
 end

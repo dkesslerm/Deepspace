@@ -55,6 +55,10 @@ module DeepSpace
             @weapons
         end
 
+        def to_s
+            getUIVersion.to_s
+        end
+
     end
 end
 

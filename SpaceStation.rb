@@ -13,10 +13,15 @@ require_relative 'ShotResult.rb'
 module DeepSpace
     class SpaceStation
 
+        def intialize(n,supplies)
+            @name=n
+            
+        end
+        
+        private
+
         @@MAXFUEL=100
         @@SHIELDLOSSPERUNITSHOT=0.1
-
-        attr_reader :ammoPower, :fuelUnits, :Hangars, :Name, :nMedals, :pendingDamage, :shieldBoosters, :weapons
 
         def assignFuelValue(f)
             @fuelUnits=f
@@ -25,6 +30,10 @@ module DeepSpace
         def cleanPendingDamage
 
         end
+
+        public
+        
+        attr_reader :ammoPower, :fuelUnits, :Hangars, :Name, :nMedals, :pendingDamage, :shieldBoosters, :weapons
 
         def cleanUpMountedItems
 
@@ -96,6 +105,10 @@ module DeepSpace
 
         def validState
 
+        end
+
+        def to_s
+            getUIVersion.to_s
         end
 
     end
