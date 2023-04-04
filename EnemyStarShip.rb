@@ -28,10 +28,10 @@ module DeepSpace
         public
         
         def fire
-
+            ammoPower
         end
 
-        def AmmoPower
+        def ammoPower
             @ammoPower
         end
 
@@ -52,11 +52,15 @@ module DeepSpace
         end
 
         def protection
-
+            shieldPower
         end
 
         def receiveShot(shot)
-
+            if (shot > protection)
+                return ShotResult::DONOTRESIST
+            else
+                return ShotResult::RESIST
+            end
         end
 
         def to_s

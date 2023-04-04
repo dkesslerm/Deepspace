@@ -25,17 +25,27 @@ module DeepSpace
         private
 
         def spaceAvailable
-
+            return (weapons.length + shieldBoosters.length < maxElements)
         end
 
         public
 
         def addWeapon(w)
-
+            if (spaceAvailable)
+                @weapons.push(w)
+                return true
+            else
+                return false
+            end
         end
 
         def addShieldBooster(s)
-
+            if (spaceAvailable)
+                @shieldBoosters.push(s)
+                return true
+            else
+                return false
+            end
         end
 
         def maxElements
@@ -51,11 +61,19 @@ module DeepSpace
         end
 
         def removeShieldBooster(s)
-
+            if (s >= shieldBoosters.length)
+                return nil
+            else
+                @shieldBoosters.remove(s)
+            end         
         end
 
         def removeWeapon(w)
-
+            if (w >= weapons.length)
+                return nil
+            else
+                @weapons.remove(w)
+            end            
         end
 
         def to_s

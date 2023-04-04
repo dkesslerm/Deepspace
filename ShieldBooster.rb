@@ -36,7 +36,6 @@ module DeepSpace
             if (uses > 0)
                 uses -= 1
                 boost
-
             else
                 1.0
             end
