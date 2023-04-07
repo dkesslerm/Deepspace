@@ -12,7 +12,7 @@ require_relative 'GameCharacter.rb'
 module DeepSpace
     class GameUniverse
         
-        def combat(station,enemy)
+        def combatGo(station,enemy)
 
         end
 
@@ -25,6 +25,8 @@ module DeepSpace
         def initialize()
             @currentStationIndex = 0
             @turns = 0
+            @gameState = GameStateController.new
+            @dice = Dice.new
         end
 
         def combat
@@ -32,23 +34,31 @@ module DeepSpace
         end
 
         def discardHangar
-
+            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+                @currentStation.discardHangar
+            end
         end
 
         def discardShieldBooster(i)
-
+            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+                @currentStation.discardShieldBooster(i)
+            end
         end
 
         def discardWeapon(i)
-
+            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+                @currentStation.discardWeapon(i)
+            end
         end
 
         def discardWeaponinHangar(i)
-
+            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+                @currentStation.discardWeaponinHangar(i)
+            end
         end
 
-        def getState
-
+        def state
+            @gameState.state
         end
 
         def getUIVersion
@@ -56,7 +66,7 @@ module DeepSpace
         end
 
         def haveAWinner
-
+            return @currentStation.nMedals >= @@WIN
         end
 
         def init(names)
@@ -64,11 +74,15 @@ module DeepSpace
         end
 
         def mountShieldBooster(i)
-
+            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+                @currentStation.mountShieldBooster(i)
+            end
         end
 
         def mountWeapon(i)
-
+            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+                @currentStation.mountWeapon(i)
+            end
         end
 
         def nextTurn
