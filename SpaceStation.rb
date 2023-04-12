@@ -15,7 +15,10 @@ module DeepSpace
 
         def intialize(n,supplies)
             @name=n
-            
+            @ammoPower=supplies.ammoPower
+            @fuelUnits=supplies.fuelUnits
+            @shieldPower=supplies.shieldPower
+            @pendingDamage=nil
         end
         
         private
@@ -28,8 +31,10 @@ module DeepSpace
         def assignFuelValue(f)
             if (f > @@MAXFUEL)
                 @fuelUnits=@@MAXFUEL
-            else
+            elsif (f > 0)
                 @fuelUnits=f
+            else
+                @fuelUnits=0
             end
         end
 
@@ -77,7 +82,7 @@ module DeepSpace
         end
 
         def fire
-
+            
         end
 
         def getUIversion
@@ -99,7 +104,7 @@ module DeepSpace
         end
 
         def move
-            #No entiendo
+            assignFuelValue(fuelUnits-speed)
         end
 
         def protection
