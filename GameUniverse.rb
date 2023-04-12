@@ -23,7 +23,7 @@ module DeepSpace
         public
 
         def initialize()
-            @currentStationIndex = 0
+            @currentStationIndex = -1
             @turns = 0
             @gameState = GameStateController.new
             @dice = Dice.new
@@ -70,7 +70,23 @@ module DeepSpace
         end
 
         def init(names)
-
+            if(state==GameState::CANNOTPLAY)
+                @spaceStations=[]
+                dealer=CardDealer.new
+                names.each do |na|
+                    station=SpaceStation.new(na,dealer.nextSuppliesPackage())
+                    @spaceStations.add(station)
+                    nh=dice.initWithNHangars
+                    nw=dice.initWithNWeapons
+                    ns=initWithNShields
+                    lo=Loot.new(0,nw,ns,nh,0)
+                    station.loot=lo
+                end
+                @currentStationIndex=dice.whoStarts(@spaceStations.size)
+                @currentStation=@spaceStations.get(@currentStationIndex)
+                @currentEnemy=dealer.nextEnemy
+                gameState.next(@turns,@spaceStations.size)
+            end
         end
 
         def mountShieldBooster(i)
