@@ -15,7 +15,9 @@ module DeepSpace
 
         def self.newSpecificWeapons(wl, s)
             @nShields=s
-            @weapons=wl
+            wl.each do |we|
+                @weapons.push(we)
+            end
             @nWeapons=-1
         end
 
