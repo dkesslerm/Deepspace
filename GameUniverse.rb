@@ -62,6 +62,10 @@ module DeepSpace
             @turns = 0
             @gameState = GameStateController.new
             @dice = Dice.new
+            @currentStation = nil
+            @currentEnemy = nil
+            @spaceStations = nil
+            @currentStationIndex = -1
         end
 
         def combat
@@ -73,25 +77,25 @@ module DeepSpace
         end
 
         def discardHangar
-            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
                 @currentStation.discardHangar
             end
         end
 
         def discardShieldBooster(i)
-            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
                 @currentStation.discardShieldBooster(i)
             end
         end
 
         def discardWeapon(i)
-            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
                 @currentStation.discardWeapon(i)
             end
         end
 
         def discardWeaponinHangar(i)
-            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
                 @currentStation.discardWeaponinHangar(i)
             end
         end
@@ -124,18 +128,18 @@ module DeepSpace
                 @currentStationIndex=dice.whoStarts(@spaceStations.size)
                 @currentStation=@spaceStations.get(@currentStationIndex)
                 @currentEnemy=dealer.nextEnemy
-                gameState.next(@turns,@spaceStations.size)
+                @gameState.next(@turns,@spaceStations.size)
             end
         end
 
         def mountShieldBooster(i)
-            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
                 @currentStation.mountShieldBooster(i)
             end
         end
 
         def mountWeapon(i)
-            if(@gameState.state == GameState::INIT || @gameState.state == GameState::AFTERCOMBAT )
+            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
                 @currentStation.mountWeapon(i)
             end
         end

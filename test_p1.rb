@@ -28,8 +28,6 @@ module DeepSpace
             
             # Loot
 
-            
-
             l=Loot.new(NSUPPLIES,NWEAPONS,NSHIELDS,NHANGARS,NMEDALS)
             
             puts 'Loot:'

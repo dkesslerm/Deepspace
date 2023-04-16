@@ -49,22 +49,22 @@ module DeepSpace
             s.each do |shield|
                 sh += shield.uses
             end
-            if (nShields > sh)
+            if (@nShields > sh)
                 nShields_new=sh
             else
-                nShields_new=nShields
+                nShields_new=@nShields
             end
 
-            if (nWeapons!=-1)
-                if(nWeapons > w.length)
+            if (@nWeapons!=-1)
+                if(@nWeapons > w.length)
                     nWeapons_new=w.length
                 else
-                    nWeapons_new=nWeapons
+                    nWeapons_new=@nWeapons
                 end
                 return newNumericWeapons(nWeapons_new,nShields_new)
             else
                 weapons_new=[]
-                weapons.each do |we|
+                @weapons.each do |we|
                     if (w.include?(we))
                         weapons_new.push(we)
                     end
@@ -74,26 +74,26 @@ module DeepSpace
         end
 
         def discardWeapon(w)
-            if (nWeapons!=-1)
-                if(nWeapons>0)
+            if (@nWeapons!=-1)
+                if(@nWeapons>0)
                     @nweapons -= 1
                 end
             else
-                weapons.delete(w)
+                @weapons.delete(w)
             end
         end
 
         def discardShieldBooster
-            if (nShields>0)
+            if (@nShields>0)
                 @nShields -= 1
             end
         end
 
         def hasNoEffect
-            if (nWeapons != -1)
-                return (nShields == 0 && nWeapons == 0)
+            if (@nWeapons != -1)
+                return (@nShields == 0 && @nWeapons == 0)
             else
-                return (nShields == 0 && weapons.emty?)
+                return (@nShields == 0 && @weapons.emty?)
         end
 
         def nShields

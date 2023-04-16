@@ -10,6 +10,8 @@ module DeepSpace
 
         def initialize(capacity)
             @maxElements=capacity
+            @weapons = nil
+            @shieldBoosters = nil
         end
 
         def self.newCopy(h)
@@ -25,7 +27,7 @@ module DeepSpace
         private
 
         def spaceAvailable
-            return (weapons.length + shieldBoosters.length < maxElements)
+            return (@weapons.length + @shieldBoosters.length < @maxElements)
         end
 
         public
@@ -61,7 +63,7 @@ module DeepSpace
         end
 
         def removeShieldBooster(s)
-            if (s >= shieldBoosters.length)
+            if (s >= @shieldBoosters.length)
                 return nil
             else
                 @shieldBoosters.remove(s)
@@ -69,7 +71,7 @@ module DeepSpace
         end
 
         def removeWeapon(w)
-            if (w >= weapons.length)
+            if (w >= @weapons.length)
                 return nil
             else
                 @weapons.remove(w)
