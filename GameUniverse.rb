@@ -13,7 +13,42 @@ module DeepSpace
     class GameUniverse
         
         def combatGo(station,enemy)
+            ch=@dice.firstShot
+            if(ch==GameCharacter::ENEMYSTARSHIP)
+                fire=enemy.fire
+                result=station.receiveShot(fire)
+                if(result==ShotResult::RESIST)
+                    fire=station.fire
+                    result=enemy.receiveShot(fire)
+                    enemyWins=(result==ShotResult::RESIST)
+                else
+                    enemyWins=true
+                end
+            else
+                fire=station.fire
+                result=enemy.receiveShot(fire)
+                enemyWins=(result==ShotResult::RESIST)
+            end
 
+            if(enemyWins)
+                s=station.speed
+                moves=@dice.spaceStationMoves(s)
+                if(!moves)
+                    damage=enemy.damage
+                    station.setPendingDamage(damage)
+                    combatResult=CombatResult::ENEMYWINS
+                else
+                    station.move
+                    combatResult=CombatResult::STATIONESCAPES
+                end
+
+            else
+                aLoot=enemy.loot
+                station.loot=aLoot
+                combatResult=CombatResult::STATIONWINS
+            end
+            @gameState.next(@turns,@spaceStations.size)
+            return combatResult
         end
 
         private
@@ -30,7 +65,11 @@ module DeepSpace
         end
 
         def combat
-
+            if (state==GameState::BEFORECOMBAT || state==GameState::INIT)
+                return combatGo(@currentStation,@currentEnemy)
+            else
+                return CombatResult::NOCOMBAT
+            end
         end
 
         def discardHangar
@@ -102,7 +141,18 @@ module DeepSpace
         end
 
         def nextTurn
-
+            if(state==GameState::AFTERCOMBAT && @currentStation.validState)
+                @currentStationIndex=(@currentStationIndex+1) % @spaceStations.size
+                @turns++
+                @currentStation=@spaceStations.get(@currentStationIndex)
+                @currentStation.cleanUpMountedItems
+                dealer = CardDealer.new
+                @currentEnemy = dealer.nextEnemy
+                @gameState.next(@turns,spaceStations.size)
+                return true
+            else
+                return false
+            end
         end
 
         def to_s
