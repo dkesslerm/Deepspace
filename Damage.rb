@@ -94,6 +94,7 @@ module DeepSpace
                 return (@nShields == 0 && @nWeapons == 0)
             else
                 return (@nShields == 0 && @weapons.emty?)
+            end
         end
 
         def nShields
