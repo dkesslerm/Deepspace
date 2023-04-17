@@ -4,7 +4,7 @@ require_relative 'DamageToUI.rb'
 require_relative 'WeaponType.rb'
 require_relative 'ShieldBooster.rb'
 
-module DeepSpace
+module Deepspace
     class Damage
 
         def self.newNumericWeapons(w,s)

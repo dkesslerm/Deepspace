@@ -9,7 +9,7 @@ require_relative 'CardDealer.rb'
 require_relative 'EnemyStarShip.rb'
 require_relative 'GameCharacter.rb'
 
-module DeepSpace
+module Deepspace
     class GameUniverse
         
         def combatGo(station,enemy)

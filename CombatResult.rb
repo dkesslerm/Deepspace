@@ -1,5 +1,5 @@
 #encoding:utf-8
-module DeepSpace
+module Deepspace
     module CombatResult
         ENEMYWINS=:enemywins
         NOCOMBAT=:nocombat

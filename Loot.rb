@@ -2,7 +2,7 @@
 
 require_relative 'LootToUI.rb'
 
-module DeepSpace
+module Deepspace
     class Loot
 
 

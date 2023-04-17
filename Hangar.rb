@@ -4,7 +4,7 @@ require_relative 'HangarToUI.rb'
 require_relative 'Weapon.rb'
 require_relative 'ShieldBooster.rb'
 
-module DeepSpace
+module Deepspace
 
     class Hangar
 

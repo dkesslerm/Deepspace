@@ -7,7 +7,7 @@ require_relative 'Weapon.rb'
 require_relative 'Dice.rb'
 require_relative 'WeaponType.rb'
 
-module DeepSpace
+module Deepspace
 
     class TestP1
 

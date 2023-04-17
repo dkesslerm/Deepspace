@@ -2,7 +2,7 @@
 
 require_relative 'ShieldToUI.rb'
 
-module DeepSpace
+module Deepspace
 
     class ShieldBooster
 

@@ -5,7 +5,7 @@ require_relative 'Loot.rb'
 require_relative 'Damage.rb'
 require_relative 'ShotResult.rb'
 
-module DeepSpace
+module Deepspace
 
     class EnemyStarShip
 

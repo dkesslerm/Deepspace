@@ -3,7 +3,7 @@
 require_relative 'WeaponToUI.rb'
 require_relative 'WeaponType.rb'
 
-module DeepSpace
+module Deepspace
 
     class Weapon
 

@@ -11,7 +11,7 @@ require_relative 'Loot.rb'
 require_relative 'ShotResult.rb'
 require_relative 'CardDealer.rb'
 
-module DeepSpace
+module Deepspace
     class SpaceStation
 
         def intialize(n,supplies)
