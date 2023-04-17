@@ -1,8 +1,8 @@
 #encoding:utf-8
 
-require_relative 'DamageToUI.rb'
-require_relative 'WeaponType.rb'
-require_relative 'ShieldBooster.rb'
+require_relative 'DamageToUI'
+require_relative 'WeaponType'
+require_relative 'ShieldBooster'
 
 module Deepspace
     class Damage

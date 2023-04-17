@@ -1,13 +1,13 @@
 #encoding:utf-8
 
-require_relative 'GameUniverseToUI.rb'
-require_relative 'Dice.rb'
-require_relative 'GameStateController.rb'
-require_relative 'CombatResult.rb'
-require_relative 'SpaceStation.rb'
-require_relative 'CardDealer.rb'
-require_relative 'EnemyStarShip.rb'
-require_relative 'GameCharacter.rb'
+require_relative 'GameUniverseToUI'
+require_relative 'Dice'
+require_relative 'GameStateController'
+require_relative 'CombatResult'
+require_relative 'SpaceStation'
+require_relative 'CardDealer'
+require_relative 'EnemyStarShip'
+require_relative 'GameCharacter'
 
 module Deepspace
     class GameUniverse
@@ -115,7 +115,9 @@ module Deepspace
         def init(names)
             if(state==GameState::CANNOTPLAY)
                 @spaceStations=[]
-                dealer=CardDealer.new
+                
+                dealer = CardDealer.new
+
                 names.each do |na|
                     station=SpaceStation.new(na,dealer.nextSuppliesPackage())
                     @spaceStations.add(station)
@@ -125,7 +127,7 @@ module Deepspace
                     lo=Loot.new(0,nw,ns,nh,0)
                     station.loot=lo
                 end
-                @currentStationIndex=dice.whoStarts(@spaceStations.size)
+                @currentStationIndex=@dice.whoStarts(@spaceStations.size)
                 @currentStation=@spaceStations.get(@currentStationIndex)
                 @currentEnemy=dealer.nextEnemy
                 @gameState.next(@turns,@spaceStations.size)

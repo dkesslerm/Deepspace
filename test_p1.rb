@@ -1,11 +1,11 @@
 #encoding: utf-8
 
-require_relative 'Loot.rb'
-require_relative 'SuppliesPackage.rb'
-require_relative 'ShieldBooster.rb'
-require_relative 'Weapon.rb'
-require_relative 'Dice.rb'
-require_relative 'WeaponType.rb'
+require_relative 'Loot'
+require_relative 'SuppliesPackage'
+require_relative 'ShieldBooster'
+require_relative 'Weapon'
+require_relative 'Dice'
+require_relative 'WeaponType'
 
 module Deepspace
 

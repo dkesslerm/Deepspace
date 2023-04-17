@@ -1,15 +1,15 @@
 #encoding:utf-8
 
-require_relative 'SpaceStationToUI.rb'
-require_relative 'Hangar.rb'
-require_relative 'SuppliesPackage.rb'
-require_relative 'ShieldBooster.rb'
-require_relative 'Weapon.rb'
-require_relative 'Hangar.rb'
-require_relative 'Damage.rb'
-require_relative 'Loot.rb'
-require_relative 'ShotResult.rb'
-require_relative 'CardDealer.rb'
+require_relative 'SpaceStationToUI'
+require_relative 'Hangar'
+require_relative 'SuppliesPackage'
+require_relative 'ShieldBooster'
+require_relative 'Weapon'
+require_relative 'Hangar'
+require_relative 'Damage'
+require_relative 'Loot'
+require_relative 'ShotResult'
+require_relative 'CardDealer'
 
 module Deepspace
     class SpaceStation

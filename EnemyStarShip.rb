@@ -1,9 +1,9 @@
 #encoding:utf-8
 
-require_relative 'EnemyToUI.rb'
-require_relative 'Loot.rb'
-require_relative 'Damage.rb'
-require_relative 'ShotResult.rb'
+require_relative 'EnemyToUI'
+require_relative 'Loot'
+require_relative 'Damage'
+require_relative 'ShotResult'
 
 module Deepspace
 

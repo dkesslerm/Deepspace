@@ -1,6 +1,6 @@
 #encoding: utf-8
 
-require_relative 'GameCharacter.rb'
+require_relative 'GameCharacter'
 
 
 module Deepspace

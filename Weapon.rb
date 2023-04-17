@@ -1,7 +1,7 @@
 #encoding: utf-8
 
-require_relative 'WeaponToUI.rb'
-require_relative 'WeaponType.rb'
+require_relative 'WeaponToUI'
+require_relative 'WeaponType'
 
 module Deepspace
 

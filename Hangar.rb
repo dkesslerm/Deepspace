@@ -1,8 +1,8 @@
 #encoding: utf-8
 
-require_relative 'HangarToUI.rb'
-require_relative 'Weapon.rb'
-require_relative 'ShieldBooster.rb'
+require_relative 'HangarToUI'
+require_relative 'Weapon'
+require_relative 'ShieldBooster'
 
 module Deepspace
 
