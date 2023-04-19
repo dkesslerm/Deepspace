@@ -27,7 +27,7 @@ module Deepspace
             @nWeapons=d.nWeapons
         end
 
-        def getUIVersion
+        def getUIversion
             DamageToUI.new(self)
         end
 
@@ -110,7 +110,7 @@ module Deepspace
         end
 
         def to_s
-            getUIVersion.to_s
+            getUIversion.to_s
         end
 
     end

@@ -9,7 +9,7 @@ module Deepspace
 
     class EnemyStarShip
 
-        def intialize(n,a,s,l,d)
+        def initialize(n,a,s,l,d)
             @name=n
             @ammoPower=a
             @shieldPower=s
@@ -18,10 +18,10 @@ module Deepspace
         end
 
         def self.newCopy(e)
-            initialize(e.name,e.ammoPower,e.shieldPower,e.loot,e.damage)
+            new(e.name,e.ammoPower,e.shieldPower,e.loot,e.damage)
         end
 
-        def getUIVersion
+        def getUIversion
             EnemyToUI.new(self)
         end
 

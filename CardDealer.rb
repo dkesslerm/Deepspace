@@ -76,7 +76,7 @@ class CardDealer
         @suppliesPackages.add(SuppliesPackage.new(40,100,40))
         @suppliesPackages.add(SuppliesPackage.new(100,100,100))
         #Propio
-        @suppliesPackages.add(SuppliesPackages.new(0,0,0))
+        @suppliesPackages.add(SuppliesPackage.new(0,0,0))
     end
     
     def createWeapons() 
@@ -123,7 +123,7 @@ class CardDealer
        @shieldBoosters.add(ShieldBooster.new("Escudo normal",3.0,2))
        @shieldBoosters.add(ShieldBooster.new("Escudo normal",4.0,2))
 
-       @shieldBooster.add(ShiedlBooster.new("Escudo Hyliano",5.0,50))
+       @shieldBoosters.add(ShieldBooster.new("Escudo Hyliano",5.0,50))
     end
                                
     def createHangars() 

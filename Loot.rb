@@ -14,7 +14,7 @@ module Deepspace
             @nMedals=me
         end
 
-        def getUIVersion
+        def getUIversion
             return LootToUI.new(self)
         end
 

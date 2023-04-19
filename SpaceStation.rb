@@ -14,16 +14,16 @@ require_relative 'CardDealer'
 module Deepspace
     class SpaceStation
 
-        def intialize(n,supplies)
+        def initialize(n,supplies)
             @name=n
             @ammoPower=supplies.ammoPower
             @fuelUnits=supplies.fuelUnits
             @shieldPower=supplies.shieldPower
             @pendingDamage=nil
-            @nMedals = nil
+            @nMedals = 0
             @hangar = nil
-            @weapons = nil
-            @shieldBoosters = nil
+            @weapons = []
+            @shieldBoosters = []
         end
         
         private
@@ -55,7 +55,7 @@ module Deepspace
 
         public
         
-        attr_reader :ammoPower, :fuelUnits, :hangar, :name, :nMedals, :pendingDamage, :shieldBoosters, :weapons
+        attr_reader :shieldPower, :ammoPower, :fuelUnits, :hangar, :name, :nMedals, :pendingDamage, :shieldBoosters, :weapons
 
         def cleanUpMountedItems
             @weapons.each do |we|
@@ -171,7 +171,7 @@ module Deepspace
         end
 
         def loot=(l)
-            dealer = CardDealer.new
+            dealer = CardDealer.instance
 
             h = l.nHangars
             if (h > 0)

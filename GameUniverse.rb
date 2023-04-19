@@ -104,8 +104,8 @@ module Deepspace
             @gameState.state
         end
 
-        def getUIVersion
-            GameUniverseToUI.new(self)
+        def getUIversion
+            GameUniverseToUI.new(@currentStation, @currentEnemy)
         end
 
         def haveAWinner
@@ -116,19 +116,19 @@ module Deepspace
             if(state==GameState::CANNOTPLAY)
                 @spaceStations=[]
                 
-                dealer = CardDealer.new
+                dealer = CardDealer.instance
 
                 names.each do |na|
                     station=SpaceStation.new(na,dealer.nextSuppliesPackage())
-                    @spaceStations.add(station)
-                    nh=dice.initWithNHangars
-                    nw=dice.initWithNWeapons
-                    ns=initWithNShields
+                    @spaceStations.push(station)
+                    nh=@dice.initWithNHangars
+                    nw=@dice.initWithNWeapons
+                    ns=@dice.initWithNShields
                     lo=Loot.new(0,nw,ns,nh,0)
                     station.loot=lo
                 end
                 @currentStationIndex=@dice.whoStarts(@spaceStations.size)
-                @currentStation=@spaceStations.get(@currentStationIndex)
+                @currentStation=@spaceStations.at(@currentStationIndex)
                 @currentEnemy=dealer.nextEnemy
                 @gameState.next(@turns,@spaceStations.size)
             end
@@ -162,7 +162,7 @@ module Deepspace
         end
 
         def to_s
-            getUIVersion.to_s
+            getUIversion.to_s
         end
 
     end

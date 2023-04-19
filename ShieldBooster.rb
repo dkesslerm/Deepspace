@@ -32,6 +32,10 @@ module Deepspace
             @uses
         end
 
+        def name
+            @name
+        end
+
         def useIt
             if (uses > 0)
                 uses -= 1

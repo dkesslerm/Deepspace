@@ -32,6 +32,10 @@ module Deepspace
             @uses
         end
 
+        def name
+            @name
+        end
+        
         def power
             @type.power
         end
