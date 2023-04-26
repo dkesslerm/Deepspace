@@ -7,24 +7,24 @@ require_relative 'ShieldBooster'
 module Deepspace
     class Damage
 
-        def self.newNumericWeapons(w,s)
-            @nShields=s
-            @nWeapons=w
-            @weapons=[]
-        end
-
-        def self.newSpecificWeapons(wl, s)
-            @nShields=s
+        def initialize(w,wl, s)
+            @nWeapons = w
             wl.each do |we|
                 @weapons.push(we)
             end
-            @nWeapons=-1
+            @nShields = s
+        end
+
+        def self.newNumericWeapons(w,s)
+            new(w, [], s)
+        end
+
+        def self.newSpecificWeapons(wl, s)
+            new(-1, wl, s)
         end
 
         def self.newCopy(d)
-            @nShields=d.nShields
-            @weapons=d.weapons
-            @nWeapons=d.nWeapons
+            new(d.nWeapons, d.weapons, d.nShields)
         end
 
         def getUIversion
