@@ -35,7 +35,7 @@ module Deepspace
                 moves=@dice.spaceStationMoves(s)
                 if(!moves)
                     damage=enemy.damage
-                    station.setPendingDamage(damage)
+                    station.pendingDamage = damage
                     combatResult=CombatResult::ENEMYWINS
                 else
                     station.move
@@ -94,9 +94,15 @@ module Deepspace
             end
         end
 
-        def discardWeaponinHangar(i)
+        def discardWeaponInHangar(i)
             if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
-                @currentStation.discardWeaponinHangar(i)
+                @currentStation.discardWeaponInHangar(i)
+            end
+        end
+
+        def discardShieldBoosterInHangar(i)
+            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
+                @currentStation.discardShieldBoosterInHangar(i)
             end
         end
 
@@ -149,12 +155,12 @@ module Deepspace
         def nextTurn
             if(state==GameState::AFTERCOMBAT && @currentStation.validState)
                 @currentStationIndex=(@currentStationIndex+1) % @spaceStations.size
-                @turns++
-                @currentStation=@spaceStations.get(@currentStationIndex)
+                @turns+=1
+                @currentStation=@spaceStations[@currentStationIndex]
                 @currentStation.cleanUpMountedItems
-                dealer = CardDealer.new
+                dealer = CardDealer.instance
                 @currentEnemy = dealer.nextEnemy
-                @gameState.next(@turns,spaceStations.size)
+                @gameState.next(@turns,@spaceStations.size)
                 return true
             else
                 return false

@@ -8,15 +8,13 @@ module Deepspace
     class Damage
 
         def initialize(w,wl, s)
+            @weapons = wl
             @nWeapons = w
-            wl.each do |we|
-                @weapons.push(we)
-            end
             @nShields = s
         end
 
         def self.newNumericWeapons(w,s)
-            new(w, [], s)
+            new(w, nil, s)
         end
 
         def self.newSpecificWeapons(wl, s)
@@ -61,7 +59,7 @@ module Deepspace
                 else
                     nWeapons_new=@nWeapons
                 end
-                return newNumericWeapons(nWeapons_new,nShields_new)
+                return Damage.newNumericWeapons(nWeapons_new,nShields_new)
             else
                 weapons_new=[]
                 @weapons.each do |we|
@@ -69,7 +67,7 @@ module Deepspace
                         weapons_new.push(we)
                     end
                 end
-                return newSpecificWeapons(weapons_new,nShields_new)
+                return Damage.newSpecificWeapons(weapons_new,nShields_new)
             end
         end
 
@@ -93,7 +91,7 @@ module Deepspace
             if (@nWeapons != -1)
                 return (@nShields == 0 && @nWeapons == 0)
             else
-                return (@nShields == 0 && @weapons.emty?)
+                return (@nShields == 0 && @weapons.empty?)
             end
         end
 

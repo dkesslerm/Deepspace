@@ -44,12 +44,8 @@ module Deepspace
         end
 
         def cleanPendingDamage
-            if(@pendingDamage.nBoosters==0)
-                if (@pendingDamage.nWeapons==0)
-                    @pendingDamage=nil
-                elsif (@pendingDamage.nWeapons==-1 && @pendingDamage.weapons.emty?)
-                    @pendingDamage=nil
-                end
+            if (@pendingDamage.hasNoEffect)
+                @pendingDamage = nil
             end
         end
 
@@ -83,6 +79,12 @@ module Deepspace
         def discardWeaponInHangar(i)
             if (!@hangar.nil?)
                 @hangar.weapons.delete_at(i)
+            end
+        end
+
+        def discardShieldBoosterInHangar(i)
+            if (!@hangar.nil?)
+                @hangar.shieldBoosters.delete_at(i)
             end
         end
 
@@ -145,7 +147,7 @@ module Deepspace
         def receiveShot(shot)
             myProtection = protection
             if (myProtection >= shot)
-                @shieldPower -= SHIELDLOSSPERUNITSHOT * shot
+                @shieldPower -= @@SHIELDLOSSPERUNITSHOT * shot
                 if (0 > @shieldPower)
                     @shieldPower = 0.0
                 end
@@ -172,8 +174,8 @@ module Deepspace
 
         def loot=(l)
             dealer = CardDealer.instance
-
             h = l.nHangars
+
             if (h > 0)
                 hangar = dealer.nextHangar
                 receiveHangar(hangar)
@@ -181,6 +183,7 @@ module Deepspace
 
             elements = l.nSupplies
             i = 0
+            
             while i < elements
                 sup = dealer.nextSuppliesPackage
                 receiveSupplies(sup)
