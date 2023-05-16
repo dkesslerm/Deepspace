@@ -38,7 +38,7 @@ module Deepspace
     sp = Deepspace::SuppliesPackage.new(0,0,0)
     loot = Deepspace::Loot.new(1,2,3,4,5)
     prueba2 = Deepspace::SpaceStation.new("pruebaa",sp)
-    prueba2.setLoot(loot)
+    prueba2.loot=loot
     puts prueba2.to_s
     puts "____________________________________"
     puts prueba.weapons

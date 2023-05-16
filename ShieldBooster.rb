@@ -37,8 +37,8 @@ module Deepspace
         end
 
         def useIt
-            if (uses > 0)
-                uses -= 1
+            if (@uses > 0)
+                @uses -= 1
                 return boost
             else
                 1.0

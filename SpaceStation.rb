@@ -125,13 +125,12 @@ module Deepspace
         end
 
         def protection
-            size = @shieldBoosters.size
-            factor = 1
+            factor = 1.0
             @shieldBoosters.each do |s|
-                factor = s * s.useIt
+                factor *= s.useIt
             end 
 
-            @shieldPower * factor
+            return @shieldPower * factor
         end
 
         def receiveHangar(h)
