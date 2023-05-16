@@ -64,8 +64,7 @@ module Deepspace
             @dice = Dice.new
             @currentStation = nil
             @currentEnemy = nil
-            @spaceStations = nil
-            @currentStationIndex = -1
+            @spaceStations = []
         end
 
         def combat
