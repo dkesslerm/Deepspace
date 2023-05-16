@@ -225,7 +225,7 @@ module Deepspace
         end
 
         def to_s
-            getUIVersion.to_s
+            getUIversion.to_s
         end
 
         def speed
