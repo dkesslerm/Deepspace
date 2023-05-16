@@ -220,8 +220,12 @@ module Deepspace
         end
 
         def validState
-            cleanPendingDamage
-            return (@pendingDamage==nil)
+            if @pendingDamage.nil?
+                return true
+            else
+                return @pendingDamage.hasNoEffect
+
+            end
         end
 
         def to_s
