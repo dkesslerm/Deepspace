@@ -29,7 +29,9 @@ module Prueba
             puts "---------------- Creamos estación espacial ----------------"
 
             puts mi_base = Deepspace::SpaceStation.new("Mi Base del Examen", un_suministro)
-            puts mi_game_universe = Deepspace::GameUniverse.new()
+            mi_game_universe = Deepspace::GameUniverse.new()
+            mi_game_universe.init(["prueba"])
+            puts mi_game_universe
 
             # COMBATE
             mi_game_universe.combatGo(mi_base, un_enemigo)
