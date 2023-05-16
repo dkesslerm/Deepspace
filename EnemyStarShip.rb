@@ -64,8 +64,7 @@ module Deepspace
         end
 
         def to_s
-            out = "Name " + name + ", AmmoPower: " + ammoPower + ", ShieldPower: " + shieldPower + ", Loot: " + loot.to_s
-            out += ", Damage: " + damage.to_s
+            return getUIversion.to_s
         end
 
     end

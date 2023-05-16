@@ -18,7 +18,7 @@ module Deepspace
             self.new(w.name, w.type, w.uses)
         end
 
-        def getUIVersion
+        def getUIversion
             return WeaponToUI.new(self)
         end
 
@@ -50,7 +50,7 @@ module Deepspace
         end
 
         def to_s
-            return getUIVersion.to_s
+            return getUIversion.to_s
         end
     end
 end

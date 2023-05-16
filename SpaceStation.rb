@@ -92,7 +92,7 @@ module Deepspace
             size = @weapons.size
             factor = 1
             @weapons.each do |w|
-                factor = w * w.useIt
+                factor *= w.useIt
             end 
 
             @ammoPower * factor                
@@ -105,14 +105,18 @@ module Deepspace
         def mountShieldBooster(i)
             if(!@hangar.nil? && @hangar.shieldBoosters.length > i)
                 sh=@hangar.shieldBoosters.delete_at(i)
-                @shieldBoosters.push(sh)
+                if (!sh.nil?)
+                    @shieldBoosters.push(sh)
+                end
             end
         end
 
         def mountWeapon(i)
             if(!@hangar.nil? && @hangar.weapons.length > i)
                 we=@hangar.weapons.delete_at(i)
-                @weapons.push(we)
+                if (!we.nil?)
+                    @weapons.push(we)
+                end
             end
         end
 
@@ -173,11 +177,11 @@ module Deepspace
         end
 
         def loot=(l)
-            dealer = CardDealer.instance
+            dealer = CardDealer.instance()
             h = l.nHangars
 
             if (h > 0)
-                hangar = dealer.nextHangar
+                hangar = dealer.nextHangar()
                 receiveHangar(hangar)
             end
 
@@ -185,7 +189,7 @@ module Deepspace
             i = 0
             
             while i < elements
-                sup = dealer.nextSuppliesPackage
+                sup = dealer.nextSuppliesPackage()
                 receiveSupplies(sup)
                 i += 1
             end
@@ -193,7 +197,8 @@ module Deepspace
             elements = l.nWeapons
             i = 0
             while i < elements
-                weap = dealer.nextWeapon
+                weap = dealer.nextWeapon()
+                weap.to_s
                 receiveWeapon(weap)
                 i += 1
             end
@@ -201,12 +206,12 @@ module Deepspace
             elements = l.nShields
             i = 0
             while i < elements
-                sh = dealer.nextShieldBooster
+                sh = dealer.nextShieldBooster()
                 receiveShieldBooster(sh)
                 i += 1
             end
 
-            medals = nMedals
+            medals = l.nMedals
             @nMedals += medals
         end
 

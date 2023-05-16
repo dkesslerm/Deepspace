@@ -15,10 +15,10 @@ module Deepspace
 
         # Constructor de copia 
         def self.newCopy(s)
-            new(s.name, s.boost, s.uses)
+            return new(s.name, s.boost, s.uses)
         end
 
-        def getUIVersion
+        def getUIversion
             return ShieldToUI.new(self)
         end
 
@@ -39,14 +39,14 @@ module Deepspace
         def useIt
             if (uses > 0)
                 uses -= 1
-                boost
+                return boost
             else
                 1.0
             end
         end
 
         def to_s
-            return "Name: #{@name}, " + getUIVersion.to_s
+            return getUIversion.to_s
         end
 
     end

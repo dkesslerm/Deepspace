@@ -12,13 +12,12 @@ module Deepspace
 
             def to_s
                 if (@power == 2.0)
-                    name = "Laser"
+                    return "Laser"
                 elsif (@power == 3.0)
-                    name = "Missile"
+                    return "Missile"
                 else
-                    name = "Plasma"
+                    return "Plasma"
                 end
-                return "Name: #{name}, Power: #{@power}"
             end
         end
 

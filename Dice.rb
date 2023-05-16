@@ -20,31 +20,30 @@ module Deepspace
 
         def initWithNHangars
             if (@generator.rand <= @NHANGARSPROB)
-                0
-            
+                return 0
             else
-                1
+                return 1
             end
         end
 
         def initWithNWeapons
             if(@generator.rand <= @NWEAPONSPROB)
-                1
+                return 1
             
             elsif (@generator.rand <= 2*@NWEAPONSPROB)
-                2
+                return 2
 
             else
-                3
+                return 3
             end
 
         end
 
         def initWithNShields
             if(@generator.rand <= @NSHIELDSPROB)
-                0
+                return 0
             else
-                1
+                return 1
             end
             
         end

@@ -10,18 +10,25 @@ module Deepspace
 
         def initialize(capacity)
             @maxElements=capacity
-            @weapons = nil
-            @shieldBoosters = nil
+            @weapons = []
+            @shieldBoosters = []
         end
 
         def self.newCopy(h)
-            @maxElements=h.maxElements
-            @weapons=h.weapons
-            @shieldBoosters=h.shieldBoosters
+            copia = Hangar.new(h.maxElements)
+            h.weapons.each do |we|
+                copia.addWeapon(we)
+            end
+
+            h.shieldBoosters.each do |sh|
+                copia.addShieldBooster(sh)
+            end
+
+            return copia
         end
 
-        def getUIVersion
-            HangarToUI.new(self)
+        def getUIversion
+            return HangarToUI.new(self)
         end
 
         private
@@ -79,7 +86,7 @@ module Deepspace
         end
 
         def to_s
-            getUIVersion.to_s
+            return getUIversion.to_s
         end
         
     end
