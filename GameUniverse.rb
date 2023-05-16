@@ -119,7 +119,6 @@ module Deepspace
 
         def init(names)
             if(state==GameState::CANNOTPLAY)
-                @spaceStations=[]
                 
                 dealer = CardDealer.instance
 
@@ -132,7 +131,7 @@ module Deepspace
                     lo=Loot.new(0,nw,ns,nh,0)
                     station.loot=lo
                 end
-                @currentStationIndex=@dice.whoStarts(@spaceStations.size)
+                @currentStationIndex=@dice.whoStarts(names.size)
                 @currentStation=@spaceStations.at(@currentStationIndex)
                 @currentEnemy=dealer.nextEnemy
                 @gameState.next(@turns,@spaceStations.size)
