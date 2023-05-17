@@ -62,9 +62,23 @@ module Deepspace
                 return Damage.newNumericWeapons(nWeapons_new,nShields_new)
             else
                 weapons_new=[]
-                @weapons.each do |we|
-                    if (w.include?(we))
-                        weapons_new.push(we)
+                aux=[]
+                w.each do |we|
+                    aux.push(we)
+                end
+                @weapons.each do |wt|
+                    encontrado=false
+                    i=0
+                    while ( i< aux.size && !encontrado)
+                        if ( wt == aux[i].type)
+                            encontrado=true
+                        else
+                            i+=1
+                        end
+                    end
+                    if encontrado
+                        weapons_new.push(wt)
+                        aux.delete_at(i)
                     end
                 end
                 return Damage.newSpecificWeapons(weapons_new,nShields_new)
