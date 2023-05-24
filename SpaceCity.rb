@@ -31,8 +31,8 @@ module Deepspace
 
         def setLoot
             super 
-            if (super != Transformation.NOTRANSFORM)
-                return Transformation.NOTRANSFORM
+            if (super != Transformation::NOTRANSFORM)
+                return Transformation::NOTRANSFORM
             end            
         end
 
