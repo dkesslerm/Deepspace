@@ -5,12 +5,14 @@ require_relative 'LootToUI'
 module Deepspace
     class Loot
 
-        def initialize(su, we, sh, ha, me)
+        def initialize(su, we, sh, ha, me, ef, city)
             @nSupplies=su
             @nWeapons=we
             @nShields=sh
             @nHangars=ha
             @nMedals=me
+            @getEfficient=ef
+            @spaceCity=city
         end
 
         def getUIversion
@@ -37,6 +39,14 @@ module Deepspace
 
         def nMedals
             @nMedals
+        end
+
+        def getEfficient
+            @getEfficient
+        end
+
+        def spaceCity
+            @spaceCity
         end
 
         def to_s

@@ -212,6 +212,14 @@ module Deepspace
 
             medals = l.nMedals
             @nMedals += medals
+
+            if (l.getEfficient)
+                Transformation.GETEFFICIENT
+            elsif (l.spaceCity)
+                Transformation.SPACECITY
+            else
+                Transformation.NOTRANSFORM
+            end
         end
 
         def pendingDamage=(d)
