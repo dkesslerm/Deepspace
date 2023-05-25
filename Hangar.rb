@@ -73,7 +73,7 @@ module Deepspace
             if (s >= @shieldBoosters.length)
                 return nil
             else
-                @shieldBoosters.remove(s)
+                @shieldBoosters.delete_at(s)
             end         
         end
 
@@ -81,7 +81,7 @@ module Deepspace
             if (w >= @weapons.length)
                 return nil
             else
-                @weapons.remove(w)
+                @weapons.delete_at(w)
             end            
         end
 

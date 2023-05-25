@@ -2,7 +2,10 @@ require_relative 'SpaceStation'
 
 module Deepspace
     class SpaceCity < SpaceStation
+
+
         def initialize(base, rest)
+            super(base)
             @base = base
             @collaborators = rest
         end
@@ -29,16 +32,9 @@ module Deepspace
             prot
         end
 
-        def setLoot
-            super 
-            if (super != Transformation::NOTRANSFORM)
-                return Transformation::NOTRANSFORM
-            end            
+        def loot=(l)
+            super(l) 
+            return Transformation::NOTRANSFORM         
         end
-
-        def base
-            @base
-        end
-
 
 end

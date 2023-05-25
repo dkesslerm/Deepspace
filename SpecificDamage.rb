@@ -7,7 +7,7 @@ require_relative 'WeaponType'
 require_relative 'ShieldBooster'
 
 module Deepspace
-    class NumericDamage < Damage
+    class SpecificDamage < Damage
         
         def initialize(wl,s)
             super(s)

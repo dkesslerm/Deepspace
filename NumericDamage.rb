@@ -22,7 +22,7 @@ module Deepspace
 
         def discardWeapon(w)
             if(@nWeapons>0)
-                @nweapons -= 1
+                @nWeapons -= 1
             end
         end
 

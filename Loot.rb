@@ -41,7 +41,7 @@ module Deepspace
             @nMedals
         end
 
-        def getEfficient
+        def efficient
             @getEfficient
         end
 

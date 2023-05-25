@@ -1,6 +1,6 @@
 #encoding:utf-8
 
-require_relative 'EfficientSpaceStation'
+require_relative 'PowerEfficientSpaceStation'
 require_relative 'Loot'
 require_relative 'Transformation'
 require_relative 'BetaPowerEfficientSpaceStationToUI'
@@ -8,7 +8,7 @@ require_relative 'SpaceStation'
 require_relative 'Dice'
 
 module Deepspace
-    class PowerEfficientSpaceStation < EfficientSpaceStation
+    class BetaPowerEfficientSpaceStation < PowerEfficientSpaceStation
 
         @@EXTRAEFFICIENCY = 1.2
 

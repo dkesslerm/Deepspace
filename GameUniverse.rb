@@ -50,7 +50,7 @@ module Deepspace
                 if (aLoot.spaceCity)
                     createSpaceCity
                     combatResult=CombatResult::STATIONWINSANDCONVERTS
-                elsif (aLoot.getEfficient)
+                elsif (aLoot.efficient)
                     makeStationEfficient
                     combatResult=CombatResult::STATIONWINSANDCONVERTS
                 else

@@ -10,6 +10,7 @@ module Deepspace
                 @power
             end
 
+            public
             def to_s
                 if (@power == 2.0)
                     return "Laser"

@@ -213,12 +213,12 @@ module Deepspace
             medals = l.nMedals
             @nMedals += medals
 
-            if (l.getEfficient)
-                Transformation.GETEFFICIENT
+            if (l.efficient)
+                Transformation::GETEFFICIENT
             elsif (l.spaceCity)
-                Transformation.SPACECITY
+                Transformation::SPACECITY
             else
-                Transformation.NOTRANSFORM
+                Transformation::NOTRANSFORM
             end
         end
 
