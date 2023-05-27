@@ -179,6 +179,8 @@ module Deepspace
         def to_s
             getUIversion.to_s
         end
+        
+        private 
 
         def makeStationEfficient
             if (dice.extraEfficiency)
