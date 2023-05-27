@@ -37,4 +37,12 @@ module Deepspace
             return Transformation::NOTRANSFORM         
         end
 
+        def getUIversion
+            return SpaceCityToUI.new(self)
+        end
+
+        def to_s
+            getUIversion.to_s
+        end
+
 end

@@ -34,7 +34,7 @@ module Deepspace
         end
 
         def to_s  #Revisar name
-            return getUIversion.name
+            return getUIversion.to_s
         end
 
     end

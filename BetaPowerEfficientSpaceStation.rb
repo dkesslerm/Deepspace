@@ -37,7 +37,7 @@ module Deepspace
         end
 
         def to_s
-            return getUIversion.name
+            return getUIversion.to_s
         end
 
     end
