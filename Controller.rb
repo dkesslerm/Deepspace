@@ -40,10 +40,10 @@ class Controller
       @view = aView
     end
   
-    def start() 
-        @model.init(@view.readNamePlayers())
-        @view.updateView()
-        @view.showView()
+    def start()
+      @model.init(@view.readNamePlayers())
+      @view.updateView()
+      @view.showView()
     end
     
     def finish(i)
@@ -74,9 +74,9 @@ class Controller
             exit(0)
           end
         when DS::CombatResult::STATIONWINSANDCONVERTS
-          @view.conversionMessage()
+          @view.wonCombatAndConvertsMessage()
           if @model.haveAWinner()
-            @view.wonGameMessage()
+            @view.wonGameMessage
             exit(0)
           end
         when DS::CombatResult::NOCOMBAT

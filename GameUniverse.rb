@@ -8,205 +8,230 @@ require_relative 'SpaceStation'
 require_relative 'CardDealer'
 require_relative 'EnemyStarShip'
 require_relative 'GameCharacter'
-require_relative 'BetaPowerEfficientSpaceStation'
+require_relative 'SpaceCity'
 require_relative 'PowerEfficientSpaceStation'
+require_relative 'BetaPowerEfficientSpaceStation'
 
 module Deepspace
+    
     class GameUniverse
-        
-        def combatGo(station,enemy)
-            ch=@dice.firstShot
-            if(ch==GameCharacter::ENEMYSTARSHIP)
-                fire=enemy.fire
-                result=station.receiveShot(fire)
-                if(result==ShotResult::RESIST)
-                    fire=station.fire
-                    result=enemy.receiveShot(fire)
-                    enemyWins=(result==ShotResult::RESIST)
-                else
-                    enemyWins=true
-                end
-            else
-                fire=station.fire
-                result=enemy.receiveShot(fire)
-                enemyWins=(result==ShotResult::RESIST)
-            end
-
-            if(enemyWins)
-                s=station.speed
-                moves=@dice.spaceStationMoves(s)
-                if(!moves)
-                    damage=enemy.damage
-                    station.pendingDamage = damage
-                    combatResult=CombatResult::ENEMYWINS
-                else
-                    station.move
-                    combatResult=CombatResult::STATIONESCAPES
-                end
-
-            else
-                aLoot=enemy.loot
-                station.loot=aLoot
-                if (aLoot.spaceCity)
-                    createSpaceCity
-                    combatResult=CombatResult::STATIONWINSANDCONVERTS
-                elsif (aLoot.efficient)
-                    makeStationEfficient
-                    combatResult=CombatResult::STATIONWINSANDCONVERTS
-                else
-                    combatResult=CombatResult::STATIONWINS
-                end
-            end
-            @gameState.next(@turns,@spaceStations.size)
-            return combatResult
-        end
-
-        private
-        
         @@WIN = 10
 
-        public
-
-        def initialize()
-            @currentStationIndex = -1
-            @turns = 0
+        def initialize
             @gameState = GameStateController.new
+            @turns = 0
             @dice = Dice.new
             @currentStation = nil
+            @currentStationIndex = -1
             @currentEnemy = nil
             @spaceStations = []
             @haveSpaceCity = false
-        end
-
-        def combat
-            if (state==GameState::BEFORECOMBAT || state==GameState::INIT)
-                return combatGo(@currentStation,@currentEnemy)
-            else
-                return CombatResult::NOCOMBAT
-            end
-        end
-
-        def discardHangar
-            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
-                @currentStation.discardHangar
-            end
-        end
-
-        def discardShieldBooster(i)
-            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
-                @currentStation.discardShieldBooster(i)
-            end
-        end
-
-        def discardWeapon(i)
-            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
-                @currentStation.discardWeapon(i)
-            end
-        end
-
-        def discardWeaponInHangar(i)
-            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
-                @currentStation.discardWeaponInHangar(i)
-            end
-        end
-
-        def discardShieldBoosterInHangar(i)
-            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
-                @currentStation.discardShieldBoosterInHangar(i)
-            end
-        end
-
-        def state
-            @gameState.state
         end
 
         def getUIversion
             GameUniverseToUI.new(@currentStation, @currentEnemy)
         end
 
-        def haveAWinner
-            return @currentStation.nMedals >= @@WIN
+        def combatGo(station, enemy)
+            ch = @dice.firstShot
+
+            if (ch == GameCharacter::ENEMYSTARSHIP)
+                fire = enemy.fire
+                result = station.receiveShot(fire)
+
+                if (result == ShotResult::RESIST)
+                    fire = station.fire
+                    result = enemy.receiveShot(fire)
+                    enemyWins = (result == ShotResult::RESIST)
+                else
+                    enemyWins = true
+                end
+            else
+                fire = station.fire
+                result = enemy.receiveShot(fire)
+                enemyWins = (result == ShotResult::RESIST)
+            end
+
+            if (enemyWins)
+                s = station.speed
+                moves = @dice.spaceStationMoves(s)
+
+                if (!moves)
+                    damage = enemy.damage
+                    station.pendingDamage= damage
+                    combatResult = CombatResult::ENEMYWINS
+                else 
+                    station.move
+                    combatResult = CombatResult::STATIONESCAPES
+                end
+            else
+                aLoot = enemy.loot
+                station.loot= aLoot
+
+                if (aLoot.efficient)
+                    combatResult = CombatResult::STATIONWINSANDCONVERTS
+                    makeStationEfficient
+                elsif (aLoot.spaceCity)
+                    combatResult = CombatResult::STATIONWINSANDCONVERTS
+                    createSpaceCity
+                else
+                    combatResult = CombatResult::STATIONWINS
+                end
+            end
+
+            @gameState.next(@turns, @spaceStations.length)
+
+            return combatResult
         end
 
-        def init(names)
-            if(state==GameState::CANNOTPLAY)
-                
-                dealer = CardDealer.instance
+        private    
 
-                names.each do |na|
-                    station=SpaceStation.new(na,dealer.nextSuppliesPackage())
-                    @spaceStations.push(station)
-                    nh=@dice.initWithNHangars
-                    nw=@dice.initWithNWeapons
-                    ns=@dice.initWithNShields
-                    lo=Loot.new(0,nw,ns,nh,0)
-                    station.loot=lo
+        def createSpaceCity
+            if (@haveSpaceCity == false)
+                aux = []
+                @spaceStations.each do |ss|
+                    aux.push(ss)
                 end
-                @currentStationIndex=@dice.whoStarts(names.size)
-                @currentStation=@spaceStations.at(@currentStationIndex)
-                @currentEnemy=dealer.nextEnemy
-                @gameState.next(@turns,@spaceStations.size)
+                aux.delete(@currentStation)
+
+                @currentStation = SpaceCity.new(@currentStation, aux)
+                
+                @haveSpaceCity = true
+
+                @spaceStations[@currentStationIndex] = @currentStation
+            end
+        end
+
+        def makeStationEfficient
+            if (@dice.extraEfficiency)
+                @currentStation = BetaPowerEfficientSpaceStation.new(@currentStation)
+            else
+                @currentStation = PowerEfficientSpaceStation.new(@currentStation)
+            end
+            
+            @spaceStations[@currentStationIndex] = @currentStation
+        end
+        
+        public
+        
+        def currentStation
+            @currentStation
+        end
+
+        def state
+            @gameState.state
+        end
+
+        def haveAWinner
+            win = false
+            if (@currentStation.nMedals == @@WIN)
+                win = true
+            end
+
+            win
+        end
+
+        def discardHangar
+            if (state == GameState::INIT || state == GameState::AFTERCOMBAT)
+                @currentStation.discardHangar
+            end
+        end
+
+        def discardShieldBooster(i)
+            if(state == GameState::INIT || state == GameState::AFTERCOMBAT)
+                @currentStation.discardShieldBooster(i)
+            end
+        end
+
+        def discardShieldBoosterInHangar(i)
+            if (state == GameState::INIT || state == GameState::AFTERCOMBAT)
+                @currentStation.discardShieldBoosterInHangar(i)
+            end
+        end
+
+        def discardWeapon(i)
+            if (state == GameState::INIT || state == GameState::AFTERCOMBAT)
+                @currentStation.discardWeapon(i)
+            end
+        end
+
+        def discardWeaponInHangar(i)
+            if (state == GameState::INIT || state == GameState::AFTERCOMBAT)
+                @currentStation.discardWeaponInHangar(i)
             end
         end
 
         def mountShieldBooster(i)
-            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
+            if (state == GameState::INIT || state == GameState::AFTERCOMBAT)
                 @currentStation.mountShieldBooster(i)
             end
         end
-
+        
         def mountWeapon(i)
-            if(state == GameState::INIT || state == GameState::AFTERCOMBAT )
+            if (state == GameState::INIT || state == GameState::AFTERCOMBAT)
                 @currentStation.mountWeapon(i)
             end
         end
 
-        def nextTurn
-            if(state==GameState::AFTERCOMBAT && @currentStation.validState)
-                @currentStationIndex=(@currentStationIndex+1) % @spaceStations.size
-                @turns+=1
-                @currentStation=@spaceStations[@currentStationIndex]
-                @currentStation.cleanUpMountedItems
+        def init(names)
+            if (state == GameState::CANNOTPLAY)
                 dealer = CardDealer.instance
+                
+                i = 0
+                while (i < names.length)
+                    supplies = dealer.nextSuppliesPackage
+                    station = SpaceStation.new(names.at(i), supplies)
+                    @spaceStations.push(station)
+
+                    nh = @dice.initWithNHangars
+                    nw = @dice.initWithNWeapons
+                    ns = @dice.initWithNShields
+
+                    lo = Loot.new(0, nw, ns, nh, 0)
+                    station.loot=lo
+                    i += 1
+                end
+
+                @currentStationIndex = @dice.whoStarts(names.length)
+                @currentStation = @spaceStations.at(@currentStationIndex)
                 @currentEnemy = dealer.nextEnemy
-                @gameState.next(@turns,@spaceStations.size)
-                return true
-            else
-                return false
+                @gameState.next(@turns, @spaceStations.length)
             end
+        end
+
+        def nextTurn
+            ret = false
+
+            if (state == GameState::AFTERCOMBAT)
+                stationState = @currentStation.validState
+                if (stationState)
+                    @currentStationIndex = (@currentStationIndex+1) % @spaceStations.length
+                    @turns += 1
+                    @currentStation = @spaceStations.at(@currentStationIndex)
+                    @currentStation.cleanUpMountedItems
+                    dealer = CardDealer.instance
+                    @currentEnemy = dealer.nextEnemy
+                    @gameState.next(@turns, @spaceStations.length)
+
+                    ret = true
+                end
+            end
+
+            ret
+        end
+
+        def combat
+            if (state == GameState::BEFORECOMBAT || state == GameState::INIT)
+                combatResult = combatGo(@currentStation, @currentEnemy)
+            else
+                combatResult = CombatResult::NOCOMBAT
+            end
+
+            combatResult
         end
 
         def to_s
             getUIversion.to_s
         end
-        
-        private 
-
-        def makeStationEfficient
-            if (dice.extraEfficiency)
-                @currentStation = BetaPowerEfficientSpaceStation.new(@currentStation)
-            else
-                @currentStation = PowerEfficientSpaceStation.new(@currentStation)
-            end
-        end
-
-        def createSpaceCity
-            if (!@haveSpaceCity)
-                base = @currentStation
-                collab = []
-                @spaceStations.each do |st|
-                    if (st != base)
-                        collab.push(st)
-                    end
-                end
-                @currentStation = SpaceCity.new(base,collab)
-                @haveSpaceCity = true
-            end
-        end
-
-
-
     end
 end
-
-

@@ -1,17 +1,19 @@
 #encoding:utf-8
+require_relative "Damage"
+require_relative "SpecificDamageToUI"
 
-require_relative 'SpecificDamageToUI'
-require_relative 'DamageToUI'
-require_relative 'Damage'
-require_relative 'WeaponType'
-require_relative 'ShieldBooster'
 
 module Deepspace
     class SpecificDamage < Damage
         
-        def initialize(wl,s)
+        @@DONOTEXIST = -1
+
+        def initialize(wl, s)
             super(s)
-            @weapons = wl
+            @weapons = []
+            wl.each do |w|
+                @weapons.push(w)
+            end            
         end
 
         def getUIversion
@@ -20,67 +22,65 @@ module Deepspace
 
         private
 
-        def arrayContainsType(w,t)
-            i=w.index(t)
-            if(i)
-                return i
-            else
-                return -1
-            end 
+        def arrayContainsType(w, t)
+            aux_wl = []
+            w.each do |wt|
+                aux_wl.push(wt.type)
+            end
+
+            ret = aux_wl.index(t)
+            if (ret == nil)
+                ret = @@DONOTEXIST
+            end
+            
+            ret
         end
 
-        public 
-
-        def discardWeapon(w)
-            @weapons.delete(w)
-        end
-
-        def hasNoEffect
-            return (@nShields == 0 && @weapons.empty?)
-        end
+        public
 
         def weapons
             @weapons
         end
 
-        def adjust(w,s)
-            nShields_new = adjustShield(s)
+        def discardWeapon(w)
+            indice = weapons.index(w.type)
+            if indice != nil
+              @weapons.delete_at(indice)
+            end        
+        end
 
-            weapons_new=[]
-            aux=[]
+        def hasNoEffect
+            return (nShields == 0 && @weapons.empty?)
+        end
+
+        def adjust(w, s)
+            weapons_new = []
+            aux = []
             w.each do |we|
                 aux.push(we)
             end
-            @weapons.each do |wt|
-                encontrado=false
-                i=0
-                while (i < aux.size && !encontrado)
-                    if (wt == aux[i].type)
-                        encontrado=true
-                    else
-                        i+=1
-                    end
-                end
-                if encontrado
+
+            weapons.each do |wt|
+                if (arrayContainsType(aux, wt) != -1)
                     weapons_new.push(wt)
-                    aux.delete_at(i)
+                    aux.delete_at(arrayContainsType(aux, wt))
                 end
             end
-            return SpecificDamage.new(weapons_new,nShields_new)
-        end
+
+            SpecificDamage.new(weapons_new, adjustShields(s))
+        end        
 
         def copy
-            wl = []
-            weapons.each do |w|
-                wl.push(w)
+            aux = []
+            @weapons.each do |w|
+                aux.push(w)
             end
 
-            SpecificDamage.new(wl, nShields)
+            SpecificDamage.new(aux, nShields)
         end
 
         def to_s
-            SpecificDamageToUI.to_s
+            getUIversion.to_s
         end
-
     end
 end

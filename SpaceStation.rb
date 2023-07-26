@@ -1,46 +1,62 @@
 #encoding:utf-8
-
 require_relative 'SpaceStationToUI'
 require_relative 'Hangar'
 require_relative 'SuppliesPackage'
 require_relative 'ShieldBooster'
 require_relative 'Weapon'
-require_relative 'Hangar'
 require_relative 'Damage'
 require_relative 'Loot'
 require_relative 'ShotResult'
 require_relative 'CardDealer'
+require_relative 'Transformation'
 
 module Deepspace
-    class SpaceStation
 
-        def initialize(n,supplies)
-            @name=n
-            @ammoPower=supplies.ammoPower
-            @fuelUnits=supplies.fuelUnits
-            @shieldPower=supplies.shieldPower
-            @pendingDamage=nil
+    class SpaceStation
+        @@MAXFUEL = 100
+        @@SHIELDLOSSPERUNITSHOT = 0.1
+        
+        def initialize(n, supplies)
+            @ammoPower = supplies.ammoPower
+            @fuelUnits = supplies.fuelUnits
+            @shieldPower = supplies.shieldPower
+            @name = n
+
             @nMedals = 0
+            @pendingDamage = nil
             @hangar = nil
             @weapons = []
             @shieldBoosters = []
         end
-        
-        private
+=begin
+        def self.newCopy(s)
 
-        # Máx cantidad de unidades de combustible que puede tener una estación espacial
-        @@MAXFUEL=100
-        # Unidades de escudo que se pierden por unidad de potencia de disparo recibido
-        @@SHIELDLOSSPERUNITSHOT=0.1
+            copy = SpaceStation.new(s.name, SuppliesPackage.new(s.ammoPower, s.fuelUnits, s.shieldPower))
+
+            copy.nMedals = s.nMedals
+            copy.pendingDamage= s.pendingDamage
+            copy.receiveHangar(s.hangar)
+            copy.weapons= s.weapons
+            copy.shieldBoosters= s.shieldBoosters
+            
+            copy
+        end
+=end
+        def getUIversion
+            SpaceStationToUI.new(self)
+        end
+
+        attr_writer :nMedals
+
+        private
 
         def assignFuelValue(f)
             if (f > @@MAXFUEL)
-                @fuelUnits=@@MAXFUEL
-            elsif (f > 0)
-                @fuelUnits=f
-            else
-                @fuelUnits=0
+                f = @@MAXFUEL
+            elsif (f < 0)
+                f = 0
             end
+            @fuelUnits = f
         end
 
         def cleanPendingDamage
@@ -50,169 +66,244 @@ module Deepspace
         end
 
         public
-        
-        attr_reader :shieldPower, :ammoPower, :fuelUnits, :hangar, :name, :nMedals, :pendingDamage, :shieldBoosters, :weapons
 
-        def cleanUpMountedItems
-            @weapons.each do |we|
-                if (we.uses==0)
-                    @weapons.delete(we)
-                end
+        def copy(ss)
+            @ammoPower = ss.ammoPower
+            @fuelUnits = ss.fuelUnits
+            @shieldPower = ss.shieldPower
+            @name = ss.name
+            @nMedals = ss.nMedals
+            @pendingDamage = ss.pendingDamage
+            @hangar = ss.hangar
+            @weapons = ss.weapons
+            @shieldBoosters = ss.shieldBoosters
+        end
+        
+        def weapons= (wl)
+            wl.each do |w|
+                @weapons.push(w)
             end
-            @shieldBoosters.each do |sh|
-                if (sh.uses==0)
-                    @shieldBoosters.delete(sh)
-                end
+        end
+
+        def shieldBoosters= (sb)
+            sb.each do |s|
+                @shieldBoosters.push(s)
+            end
+        end
+
+        def ammoPower
+            @ammoPower
+        end
+
+        def fuelUnits
+            @fuelUnits
+        end
+
+        def hangar
+            @hangar
+        end
+
+        def name
+            @name
+        end
+
+        def nMedals
+            @nMedals
+        end
+
+        def pendingDamage
+            @pendingDamage
+        end
+
+        def shieldBoosters
+            @shieldBoosters
+        end
+
+        def weapons
+            @weapons
+        end
+
+        def shieldPower
+            @shieldPower
+        end
+
+        def pendingDamage= d
+            @pendingDamage = d
+        end
+
+        def receiveWeapon(w)
+            ret = false
+            if (@hangar != nil)
+                ret = @hangar.addWeapon(w)                
+            end
+            
+            ret
+        end
+
+        def receiveShieldBooster(s)
+            ret = false
+            if (@hangar != nil)
+                ret = @hangar.addShieldBooster(s)
+            end
+
+            ret
+        end
+
+        def receiveHangar(h)
+            if (@hangar == nil)
+                @hangar = h
             end
         end
 
         def discardHangar
-            @hangar=nil
-        end
-
-        def discardShieldBooster(i)
-            if (!@hangar.nil?)
-                @hangar.shieldBoosters.delete_at(i)
-            end
-        end
-
-        def discardWeaponInHangar(i)
-            if (!@hangar.nil?)
-                @hangar.weapons.delete_at(i)
-            end
-        end
-
-        def discardShieldBoosterInHangar(i)
-            if (!@hangar.nil?)
-                @hangar.shieldBoosters.delete_at(i)
-            end
-        end
-
-        def fire
-            size = @weapons.size
-            factor = 1
-            @weapons.each do |w|
-                factor *= w.useIt
-            end 
-
-            @ammoPower * factor                
-        end
-
-        def getUIversion
-            SpaceStationToUI.new(self)
-        end
-
-        def mountShieldBooster(i)
-            if(!@hangar.nil? && @hangar.shieldBoosters.length > i)
-                sh=@hangar.shieldBoosters.delete_at(i)
-                if (!sh.nil?)
-                    @shieldBoosters.push(sh)
-                end
-            end
-        end
-
-        def mountWeapon(i)
-            if(!@hangar.nil? && @hangar.weapons.length > i)
-                we=@hangar.weapons.delete_at(i)
-                if (!we.nil?)
-                    @weapons.push(we)
-                end
-            end
-        end
-
-        def move
-            assignFuelValue(@fuelUnits-speed)
-        end
-
-        def protection
-            factor = 1.0
-            @shieldBoosters.each do |s|
-                factor *= s.useIt
-            end 
-
-            return @shieldPower * factor
-        end
-
-        def receiveHangar(h)
-            if (@hangar.nil?)
-                @hangar=h
-            end
-        end
-
-        def receiveShieldBooster(s)
-            if (!@hangar.nil?)
-                return @hangar.addShieldBooster(s)
-            else
-                return false
-            end
-        end
-
-        def receiveShot(shot)
-            myProtection = protection
-            if (myProtection >= shot)
-                @shieldPower -= @@SHIELDLOSSPERUNITSHOT * shot
-                if (0 > @shieldPower)
-                    @shieldPower = 0.0
-                end
-                ShotResult::RESIST
-            else 
-                @shieldPower = 0.0
-                ShotResult::DONOTRESIST  
-            end
+            @hangar = nil
         end
 
         def receiveSupplies(s)
             @ammoPower += s.ammoPower
             @shieldPower += s.shieldPower
-            assignFuelValue(fuelUnits+s.fuelUnits)
+            assignFuelValue(s.fuelUnits + @fuelUnits)
         end
 
-        def receiveWeapon(w)
-            if (!@hangar.nil?)
-                return @hangar.addWeapon(w)
-            else
-                return false
+        def pendingDamage=(d)
+            if (d != nil)
+                @pendingDamage = d.adjust(weapons, shieldBoosters)
+            else 
+                @pendingDamage = nil
             end
+        end
+
+        def mountWeapon(i)
+            if (@hangar != nil && i >= 0 && i < hangar.weapons.length)
+                w = @hangar.removeWeapon(i)
+            end
+
+            if (w != nil)
+                @weapons.push(w)
+            end
+        end
+
+        def mountShieldBooster(i)
+            if (@hangar != nil && i >= 0 && i < hangar.shieldBoosters.length)
+                sb = @hangar.removeShieldBooster(i)
+            end
+
+            if (sb != nil)
+                @shieldBoosters.push(sb)
+            end
+        end
+
+        def discardWeaponInHangar(i)
+            if (@hangar != nil)
+                @hangar.removeWeapon(i)
+            end
+        end
+
+        def discardShieldBoosterInHangar(i)
+            if (@hangar != nil)
+                @hangar.removeShieldBooster(i)
+            end
+        end
+
+        def speed
+            return (@fuelUnits / @@MAXFUEL)
+        end
+
+        def move
+            assignFuelValue(@fuelUnits - @fuelUnits*speed)
+        end
+
+        def validState
+            pendingDamage == nil || pendingDamage.hasNoEffect
+        end
+
+        def cleanUpMountedItems
+            @weapons.each do |w|
+                if (w.uses == 0)
+                    @weapons.delete(w)
+                end
+            end
+
+            @shieldBoosters.each do |s|
+                if (s.uses == 0)
+                    @shieldBoosters.delete(s)
+                end
+            end
+        end
+
+        def fire
+            size = @weapons.length
+            factor = 1
+            
+            @weapons.each do |w|
+                factor *= w.useIt
+            end
+
+            return (ammoPower*factor)
+        end
+        
+        def protection
+            size = @shieldBoosters.length
+            factor = 1
+
+            @shieldBoosters.each do |s|
+                factor *= s.useIt
+            end
+
+            return (shieldPower*factor)
+        end
+
+        def receiveShot(shot) 
+            myProtection = protection
+            
+            if (myProtection >= shot)
+                @shieldPower -= @@SHIELDLOSSPERUNITSHOT*shot
+                if (@shieldPower < 0)
+                    @shieldPower = 0
+                end
+                return ShotResult::RESIST
+            else
+                @shieldPower = 0
+                return ShotResult::DONOTRESIST
+            end                
         end
 
         def loot=(l)
-            dealer = CardDealer.instance()
-            h = l.nHangars
+            dealer = CardDealer.instance
 
+            h = l.nHangars
             if (h > 0)
-                hangar = dealer.nextHangar()
-                receiveHangar(hangar)
+                han = dealer.nextHangar
+                receiveHangar(han)
             end
 
-            elements = l.nSupplies
             i = 0
-            
-            while i < elements
-                sup = dealer.nextSuppliesPackage()
+            elements = l.nSupplies
+            while (i < elements)
+                sup = dealer.nextSuppliesPackage
                 receiveSupplies(sup)
                 i += 1
             end
 
-            elements = l.nWeapons
             i = 0
-            while i < elements
-                weap = dealer.nextWeapon()
-                weap.to_s
+            elements = l.nWeapons
+            while (i < elements)
+                weap = dealer.nextWeapon
                 receiveWeapon(weap)
                 i += 1
             end
-
-            elements = l.nShields
+            
             i = 0
-            while i < elements
-                sh = dealer.nextShieldBooster()
+            elements = l.nShields
+            while (i < elements)
+                sh = dealer.nextShieldBooster
                 receiveShieldBooster(sh)
                 i += 1
             end
 
             medals = l.nMedals
             @nMedals += medals
-
+    
             if (l.efficient)
                 Transformation::GETEFFICIENT
             elsif (l.spaceCity)
@@ -222,31 +313,10 @@ module Deepspace
             end
         end
 
-        def pendingDamage=(d)
-            @pendingDamage=d.adjust(@weapons,@shieldBoosters)
-        end
-
-        def validState
-            if @pendingDamage.nil?
-                return true
-            else
-                return @pendingDamage.hasNoEffect
-
-            end
-        end
-
-        def to_s
-            getUIversion.to_s
-        end
-
-        def speed
-            return (@fuelUnits/@@MAXFUEL)
-        end
-
         def discardWeapon(i)
-            size = @weapons.size
+            size = weapons.length
             if (i >= 0 && i < size)
-                w = @weapons.delete_at(i)
+                w = weapons.delete_at(i)
                 if (@pendingDamage != nil)
                     @pendingDamage.discardWeapon(w)
                     cleanPendingDamage
@@ -255,9 +325,9 @@ module Deepspace
         end
 
         def discardShieldBooster(i)
-            size = @shieldBoosters.size
+            size = shieldBoosters.length
             if (i >= 0 && i < size)
-                s = @shieldBoosters.delete_at(i)
+                s = shieldBoosters.delete_at(i)
                 if (@pendingDamage != nil)
                     @pendingDamage.discardShieldBooster
                     cleanPendingDamage
@@ -265,9 +335,8 @@ module Deepspace
             end
         end
 
-
-    end
-end
-
-
-        
+        def to_s
+            getUIversion.to_s
+        end
+    end # class SpaceStation
+end # module Deepspace

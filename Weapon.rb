@@ -1,28 +1,27 @@
-#encoding: utf-8
-
-require_relative 'WeaponToUI'
-require_relative 'WeaponType'
+#encoding:utf-8
+require_relative "WeaponToUI"
 
 module Deepspace
 
-    class Weapon
-
-        def initialize(n,t,u)
-            @name=n
-            @type=t
-            @uses=u
+    class Weapon 
+        
+        def initialize(n, t, u)
+            @name = n
+            @type = t
+            @uses = u
         end
 
-        #Constructor de copia
         def self.newCopy(w)
             self.new(w.name, w.type, w.uses)
         end
 
         def getUIversion
-            return WeaponToUI.new(self)
+            WeaponToUI.new(self)
         end
 
-        public
+        def name
+            @name
+        end
 
         def type
             @type
@@ -32,25 +31,21 @@ module Deepspace
             @uses
         end
 
-        def name
-            @name
-        end
-        
         def power
-            @type.power
+            type.power
         end
 
         def useIt
-            if (uses > 0)
-                uses--
-                power
+            if (@uses > 0)
+                @uses -= 1
+                return power
             else
-                1.0
+                return 1.0
             end
         end
 
         def to_s
-            return getUIversion.to_s
+            getUIversion.to_s
         end
     end
 end

@@ -1,23 +1,17 @@
-#encoding: utf-8
-
-require_relative 'GameCharacter'
-
+#encoding:utf-8
 
 module Deepspace
 
-    
     class Dice
 
-        def initialize()
-            @NHANGARSPROB=0.25
-            @NSHIELDSPROB=0.25
-            @NWEAPONSPROB=0.33
-            @FIRSTSHOTPROB=0.5
+        def initialize
+            @NHANGARSPROB = 0.25
+            @NSHIELDSPROB = 0.25
+            @NWEAPONSPROB = 0.33
+            @FIRSTSHOTPROB = 0.5
             @EXTRAEFFICIENCYPROB = 0.8
-            @generator=Random.new
+            @generator = Random.new
         end
-
-        public
 
         def initWithNHangars
             if (@generator.rand <= @NHANGARSPROB)
@@ -28,47 +22,52 @@ module Deepspace
         end
 
         def initWithNWeapons
-            if(@generator.rand <= @NWEAPONSPROB)
+            num = @generator.rand
+            if (num <= @NWEAPONSPROB)
                 return 1
-            
-            elsif (@generator.rand <= 2*@NWEAPONSPROB)
+            elsif (num <= 2*@NWEAPONSPROB)
                 return 2
-
             else
                 return 3
             end
-
         end
 
         def initWithNShields
-            if(@generator.rand <= @NSHIELDSPROB)
+            if (@generator.rand <= @NSHIELDSPROB)
                 return 0
             else
                 return 1
             end
-            
         end
 
-        def whoStarts(nPlayers)
-            @generator.rand(nPlayers)
+        def whoStarts(n)
+            @generator.rand(n)
         end
 
         def firstShot
-            if(@generator.rand <= @FIRSTSHOTPROB)
-                GameCharacter::SPACESTATION
+            if (@generator.rand <= @FIRSTSHOTPROB)
+                return GameCharacter::SPACESTATION
             else
-                GameCharacter::ENEMYSTARSHIP
+                return GameCharacter::ENEMYSTARSHIP
             end
         end
-        
-        def spaceStationMoves(speed)
-            (@generator.rand <= speed)
+
+        def spaceStationMoves(s)
+            return (@generator.rand <= s)
         end
 
         def extraEfficiency
-            (@generator.rand <= @EXTRAEFFICIENCYPROB)
+            return (@generator.rand <= @EXTRAEFFICIENCYPROB)
         end
-
     end
-
 end
+
+        
+
+
+            
+            
+        
+
+
+

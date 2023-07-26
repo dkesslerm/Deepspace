@@ -324,8 +324,8 @@ class TextMainView
     puts "Has GANADO el combate. \tDisfruta de tu botín."
   end
 
-  def conversionMessage()
-    puts "Has GANADO el combate. \nAdemás te has CONVERTIDO. \nDisfruta de tu botín."
+  def wonCombatAndConvertsMessage()
+    puts "Has GANADO el combate. Además, te has CONVERTIDO. \tDisfruta de tu botín."
   end
   
   def wonGameMessage() 
@@ -340,12 +340,22 @@ class TextMainView
     out = ""
 
     out += @@mainSeparator + "\n"
-    out += " ***** Información de la  Estación Espacial Actual *****\n"
+
+    if (station.instance_of? DS::PowerEfficientSpaceStationToUI)
+      out += " ***** Información de la Estación Espacial Eficiente Actual *****\n"
+    elsif (station.instance_of? DS::BetaPowerEfficientSpaceStationToUI)
+      out += " ***** Información de la Estación Espacial Beta-Eficiente Actual *****\n"
+    elsif (station.instance_of? DS::SpaceCityToUI)
+      out += " ***** Información de la Ciudad Espacial Actual *****\n"
+    else
+      out += " ***** Información de la Estación Espacial Actual *****\n"
+    end
+
     out += "       -------------------------------------------\n"
     out += "Nombre ............ : " + station.name + "\n"
     out += "Potencia de fuego . : " + station.ammoPower.to_s + "\n"
     out += "Potencia de defensa : " + station.shieldPower.to_s + "\n"
-    out += "Medallas .......... : " + station.nMedals.to_s + "\n"
+    out += "Medallas .......... : " + station.nMedals.to_s  + "\n"
     out += "Armas montadas : \n"
     tmp = showWeapons(station.weapons, false)
     if("".eql?(tmp)) then

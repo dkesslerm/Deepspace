@@ -24,7 +24,6 @@ class SpaceStationToUI
     
     @name=station.name
     @nMedals=station.nMedals
-    
     @ammoPower=station.ammoPower
     @fuelUnits=station.fuelUnits
     @shieldPower=station.shieldPower

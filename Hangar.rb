@@ -1,62 +1,45 @@
-#encoding: utf-8
-
-require_relative 'HangarToUI'
-require_relative 'Weapon'
-require_relative 'ShieldBooster'
+#encoding:utf-8
+require_relative "HangarToUI"
 
 module Deepspace
-
+    
     class Hangar
 
         def initialize(capacity)
-            @maxElements=capacity
+            @maxElements = capacity
             @weapons = []
             @shieldBoosters = []
         end
 
         def self.newCopy(h)
-            copia = Hangar.new(h.maxElements)
-            h.weapons.each do |we|
-                copia.addWeapon(we)
+            copy = Hangar.new(h.maxElements)
+            h.weapons.each do |w|
+                copy.addWeapon(w)
             end
 
-            h.shieldBoosters.each do |sh|
-                copia.addShieldBooster(sh)
+            h.shieldBoosters.each do |s|
+                copy.addShieldBooster(s)
             end
 
-            return copia
+            copy
         end
 
         def getUIversion
-            return HangarToUI.new(self)
+            HangarToUI.new(self)
         end
 
         private
 
         def spaceAvailable
-            return (@weapons.length + @shieldBoosters.length < @maxElements)
+            if (@weapons.length + @shieldBoosters.length < @maxElements)
+                true
+            else 
+                false
+            end
         end
-
+    
         public
-
-        def addWeapon(w)
-            if (spaceAvailable)
-                @weapons.push(w)
-                return true
-            else
-                return false
-            end
-        end
-
-        def addShieldBooster(s)
-            if (spaceAvailable)
-                @shieldBoosters.push(s)
-                return true
-            else
-                return false
-            end
-        end
-
+        
         def maxElements
             @maxElements
         end
@@ -69,25 +52,48 @@ module Deepspace
             @shieldBoosters
         end
 
-        def removeShieldBooster(s)
-            if (s >= @shieldBoosters.length)
-                return nil
-            else
-                @shieldBoosters.delete_at(s)
-            end         
+        def addWeapon(w)
+            ret = false
+            if (spaceAvailable)
+                @weapons.push(w)
+                ret = true
+            end
+
+            ret
+        end
+
+        def addShieldBooster(s)
+            ret = false
+            if (spaceAvailable)
+                @shieldBoosters.push(s)
+                ret = true
+            end
+            
+            ret
         end
 
         def removeWeapon(w)
-            if (w >= @weapons.length)
-                return nil
-            else
-                @weapons.delete_at(w)
-            end            
+            ret = nil
+            if (w >= 0 && w < @weapons.length)
+                ret = @weapons.delete_at(w)
+            end
+            
+            ret
+        end
+
+        def removeShieldBooster(s)
+            ret = nil
+            if (s >= 0 && s < @shieldBoosters.length)
+                ret = @shieldBoosters.delete_at(s)
+            end
+
+            ret
         end
 
         def to_s
-            return getUIversion.to_s
+            getUIversion.to_s
         end
-        
+
     end
 end
+

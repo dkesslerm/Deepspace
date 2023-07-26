@@ -1,23 +1,23 @@
 #encoding:utf-8
+
 module Deepspace
     module WeaponType
-        class Type 
+        class Type
             def initialize(p)
-                @power=p
+                @power = p
             end
 
             def power
                 @power
             end
 
-            public
             def to_s
-                if (@power == 2.0)
-                    return "Laser"
-                elsif (@power == 3.0)
-                    return "Missile"
+                if (power == 2.0)
+                    return "LASER"
+                elsif (power == 3.0)
+                    return "MISSILE"
                 else
-                    return "Plasma"
+                    return "PLASMA"
                 end
             end
         end
@@ -28,3 +28,5 @@ module Deepspace
 
     end
 end
+
+        

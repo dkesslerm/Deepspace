@@ -153,9 +153,9 @@ class CardDealer
         softSpecificDamage1=SpecificDamage.new([WeaponType::MISSILE],1)  
         softSpecificDamage2=SpecificDamage.new([WeaponType::PLASMA],1)  
         mediumSpecificDamage0=SpecificDamage.new([WeaponType::LASER,WeaponType::MISSILE],2)  
-        
-        @enemies.add(EnemyStarShip.new("Enemigo fácil -1",0,0,regularLoot0,lowDamage0));
-        @enemies.add(EnemyStarShip.new("Enemigo fácil -1",0,10,badLoot,lowDamage0));
+       
+        @enemies.add(EnemyStarShip.new("Enemigo fácil -1",0,0,regularLoot1,lowDamage0));
+        @enemies.add(EnemyStarShip.new("Enemigo fácil -2",0,0,regularLoot0,lowDamage0));
         @enemies.add(EnemyStarShip.new("Enemigo fácil -1",10,0,badLoot,lowDamage0));
         @enemies.add(EnemyStarShip.new("Enemigo fácil 0",10,10,badLoot,lowDamage0));
         @enemies.add(EnemyStarShip.new("Enemigo fácil 0",10,10,badLoot,lowDamage0));

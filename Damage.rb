@@ -1,52 +1,51 @@
 #encoding:utf-8
-
-require_relative 'DamageToUI'
-require_relative 'WeaponType'
-require_relative 'ShieldBooster'
+require_relative "DamageToUI"
 
 module Deepspace
+
     class Damage
-        
+
         def initialize(s)
             @nShields = s
-        end
-        
+        end                
+
         def getUIversion
             DamageToUI.new(self)
         end
 
         public
-        
-        def adjustShield(s)
-            sh=0
-            s.each do |shield|
-                sh += shield.uses
-            end
-            if (@nShields > sh)
-                nShields_new=sh
-            else
-                nShields_new=@nShields
-            end
-
-            nShields_new
-        end
-
-        def discardShieldBooster
-            if (@nShields>0)
-                @nShields -= 1
-            end
-        end
 
         def nShields
             @nShields
+        end
+
+        def discardShieldBooster
+            if (@nShields > 0)
+                @nShields -= 1
+            else
+                @nShields = 0
+            end
+        end
+
+        def adjustShields(s)
+            nShields_new = @nShields
+            if (nShields_new > s.length)
+                nShields_new = s.length
+            end
+
+            nShields_new
         end
 
         def to_s
             getUIversion.to_s
         end
 
-    end
-end
+    end # class Damage
+end # module Deepspace
 
 
+                
 
+                
+
+        

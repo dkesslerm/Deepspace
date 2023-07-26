@@ -1,45 +1,35 @@
 #encoding:utf-8
-
-require_relative 'SpaceStation'
-require_relative 'Loot'
-require_relative 'Transformation'
-require_relative 'PowerEfficientSpaceStationToUI'
+require_relative "SpaceStation"
+require_relative "PowerEfficientSpaceStationToUI"
 
 module Deepspace
     class PowerEfficientSpaceStation < SpaceStation
 
-        @@EFFICIENCYFACTOR = 1.10
+        @@EFFICIENCYFACTOR = 1.1
 
-        public
-
-        def initialize(estacion)
-            super(estacion)
-        end
-
-        def loot=(l) #Revisar tema transformaciones
-            super(l)
-            return Transformation::NOTRANSFORM
+        def initialize(s)
+            copy(s)
         end
 
         def fire
-            return (super*@@EFFICIENCYFACTOR)
+            super*@@EFFICIENCYFACTOR
         end
 
         def protection
-            return (super*@@EFFICIENCYFACTOR)
+            super*@@EFFICIENCYFACTOR
         end
 
+        def loot= (l)
+            super(l)
+            Transformation::NOTRANSFORM
+        end
+        
         def getUIversion
-            return PowerEfficientSpaceStationToUI.new(self)
+            PowerEfficientSpaceStationToUI.new(self)
         end
-
-        def to_s  #Revisar name
-            return getUIversion.to_s
-        end
-
     end
-
 end
+
 
 
 

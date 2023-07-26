@@ -1,22 +1,22 @@
 #encoding:utf-8
-
-require_relative 'LootToUI'
+require_relative "LootToUI"
 
 module Deepspace
+    
     class Loot
 
-        def initialize(su, we, sh, ha, me, ef=false, city=false)
-            @nSupplies=su
-            @nWeapons=we
-            @nShields=sh
-            @nHangars=ha
-            @nMedals=me
-            @getEfficient=ef
-            @spaceCity=city
+        def initialize(s, w, sh, h, m, ef = false, city = false)
+            @nSupplies = s
+            @nWeapons = w
+            @nShields = sh
+            @nHangars = h
+            @nMedals = m
+            @efficient = ef
+            @spaceCity = city
         end
 
         def getUIversion
-            return LootToUI.new(self)
+            LootToUI.new(self)
         end
 
         public
@@ -42,7 +42,7 @@ module Deepspace
         end
 
         def efficient
-            @getEfficient
+            @efficient
         end
 
         def spaceCity
@@ -50,8 +50,7 @@ module Deepspace
         end
 
         def to_s
-            getUIVersion.to_s
+            getUIversion.to_s
         end
-        
     end
 end

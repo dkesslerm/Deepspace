@@ -1,72 +1,63 @@
 #encoding:utf-8
-
-require_relative 'EnemyToUI'
-require_relative 'Loot'
-require_relative 'Damage'
-require_relative 'ShotResult'
+require_relative "EnemyToUI"
 
 module Deepspace
-
+    
     class EnemyStarShip
-
-        def initialize(n,a,s,l,d)
-            @name=n
-            @ammoPower=a
-            @shieldPower=s
-            @loot=l
-            @damage=d
+        def initialize(n, a, s, l, d)
+            @name = n
+            @ammoPower = a
+            @shieldPower = s
+            @loot = l
+            @damage = d            
         end
 
         def self.newCopy(e)
-            new(e.name,e.ammoPower,e.shieldPower,e.loot,e.damage)
+            self.new(e.name, e.ammoPower, e.shieldPower, e.loot, e.damage)
         end
 
         def getUIversion
             EnemyToUI.new(self)
         end
 
-        public
-        
-        def fire
-            ammoPower
+        def name
+            @name
         end
 
         def ammoPower
             @ammoPower
         end
 
-        def damage
-            @damage
+        def shieldPower
+            @shieldPower
         end
 
         def loot
             @loot
         end
 
-        def name
-            @name
-        end
-
-        def shieldPower
-            @shieldPower
+        def damage
+            @damage
         end
 
         def protection
             shieldPower
         end
 
+        def fire
+            ammoPower
+        end
+
         def receiveShot(shot)
-            if (shot > protection)
-                return ShotResult::DONOTRESIST
+            if (shot > @shieldPower)
+                ShotResult::DONOTRESIST
             else
-                return ShotResult::RESIST
+                ShotResult::RESIST
             end
         end
 
         def to_s
-            return getUIversion.to_s
+            getUIversion.to_s
         end
-
-    end
-
-end
+    end # class EnemyStarShip
+end # module Deepspace

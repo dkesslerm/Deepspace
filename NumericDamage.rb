@@ -1,15 +1,11 @@
 #encoding:utf-8
-
-require_relative 'NumericDamageToUI'
-require_relative 'DamageToUI'
-require_relative 'Damage'
-require_relative 'WeaponType'
-require_relative 'ShieldBooster'
+require_relative "Damage"
+require_relative "NumericDamageToUI"
 
 module Deepspace
     class NumericDamage < Damage
-        
-        def initialize(w,s)
+
+        def initialize(w, s)
             super(s)
             @nWeapons = w
         end
@@ -17,31 +13,30 @@ module Deepspace
         def getUIversion
             NumericDamageToUI.new(self)
         end
-            
+
         public 
-
-        def discardWeapon(w)
-            if(@nWeapons>0)
-                @nWeapons -= 1
-            end
-        end
-
-        def hasNoEffect
-            return (@nShields == 0 && @nWeapons == 0)
-        end
 
         def nWeapons
             @nWeapons
         end
 
-        def adjust(w,s)
-            nShields_new = adjustShield(s)
-            if(@nWeapons > w.length)
-                nWeapons_new=w.length
-            else
-                nWeapons_new=@nWeapons
+        def discardWeapon(w)
+            if (@nWeapons > 0)
+                @nWeapons -= 1
             end
-            return NumericDamage.new(nWeapons_new,nShields_new)
+        end
+
+        def hasNoEffect
+            return (nShields == 0 && nWeapons == 0)
+        end
+
+        def adjust(w, s)
+            nWeapons_new = @nWeapons
+            if (nWeapons_new > w.length)
+                nWeapons_new = w.length
+            end
+
+            NumericDamage.new(nWeapons_new, adjustShields(s))
         end
 
         def copy
@@ -49,8 +44,7 @@ module Deepspace
         end
 
         def to_s
-            NumericDamageToUI.to_s
+            getUIversion.to_s
         end
-
     end
 end
